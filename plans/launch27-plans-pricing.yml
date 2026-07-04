@@ -1,0 +1,162 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Launch27
+providerId: launch27
+created: '2026-07-04'
+modified: '2026-07-04'
+reconciled: false
+tags:
+- Field Service Management
+- Cleaning Services
+- Booking
+- Plans
+description: >-
+  Launch27 is sold as a per-account monthly or annual subscription with three
+  tiers - Base, Pro, and Plus - each unlocking additional features (premium
+  booking form, integrations, SMS, gift cards, mobile app, multi-location,
+  referral engine). All tiers include unlimited users and unlimited bookings;
+  the tiers differ by feature availability, not by API call volume or seat
+  count. The API itself (the Bitbucket-documented REST surface) is not sold or
+  metered separately - it is bundled access to the same account data an
+  account's paying tier already exposes through the Launch27 web app, and is
+  used to power Launch27's own booking widgets and the authenticated customer
+  portal. A 14-day free trial is offered on all tiers.
+notes: >-
+  Pricing captured from https://www.launch27.com/pricing/ on the review date;
+  verify current rates and feature lists directly, as SaaS list pricing
+  changes without notice and third-party listing sites (G2, Capterra, ITQlick)
+  showed some variance from the official page.
+sources:
+- https://www.launch27.com/pricing/
+- https://www.launch27.com/faq/
+plans:
+- id: launch27-base
+  name: Base
+  type: paid
+  description: >-
+    Entry tier: unlimited users and bookings, customer database with tags and
+    notes, cleaner/team management, basic booking form (Launch27-branded),
+    multiple calendar views, payroll manager with revenue split, automated
+    email reminders, customer login portal, booking integrations (WordPress,
+    Squarespace, Wix, Facebook), free chat and email support.
+  entries:
+  - label: Monthly Subscription
+    name: base_monthly
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $75/month
+    userMultiplied: false
+  - label: Annual Subscription
+    name: base_annual
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: $765/year (15% discount vs monthly)
+    userMultiplied: false
+  elements:
+  - name: Unlimited Users and Bookings
+  - name: Customer Database
+  - name: Cleaner/Team Management
+  - name: Basic Booking Form (L27 Branding)
+  - name: Payroll Manager
+  - name: Automated Email Reminders
+  - name: Customer Login Portal
+- id: launch27-pro
+  name: Pro
+  type: paid
+  description: >-
+    Everything in Base, plus premium unbranded booking form, custom CSS
+    editor, Google Calendar and Zapier integration, SMS reminders and
+    scheduling, Google Maps integration, automated review requests, employee
+    rating system, gift cards, QuickBooks integration, advanced calendar
+    views.
+  entries:
+  - label: Monthly Subscription
+    name: pro_monthly
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $150/month
+    userMultiplied: false
+  - label: Annual Subscription
+    name: pro_annual
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: $1,530/year (15% discount vs monthly)
+    userMultiplied: false
+  elements:
+  - name: Premium Booking Form (No Branding)
+  - name: Custom CSS Editor
+  - name: Zapier Integration
+  - name: SMS Reminders
+  - name: Gift Cards
+  - name: QuickBooks Integration
+- id: launch27-plus
+  name: Plus
+  type: paid
+  description: >-
+    Everything in Pro, plus mobile app access for cleaners/admins,
+    multi-lingual app (English/Spanish), automatic credit card
+    pre-authorization and charging, customer referral engine, photo storage
+    via the app, multi-location management with location-specific pricing.
+  entries:
+  - label: Monthly Subscription
+    name: plus_monthly
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $299/month
+    userMultiplied: false
+  - label: Annual Subscription
+    name: plus_annual
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: $3,049.80/year (15% discount vs monthly)
+    userMultiplied: false
+  elements:
+  - name: Mobile App (Cleaners/Admins)
+  - name: Automatic CC Pre-Auth and Charging
+  - name: Customer Referral Engine
+  - name: Multi-Location Management
+- id: launch27-trial
+  name: Free Trial
+  type: free
+  description: 14-day, no-cost trial available on any tier before billing begins.
+  entries:
+  - label: Trial Period
+    name: trial_days
+    type: flat
+    metric: days
+    limit: 14
+    timeFrame: total
+    geo: global
+    unit: 1
+    price: free for 14 days
+    userMultiplied: false
+  elements:
+  - name: Full Feature Access for Trial Duration
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

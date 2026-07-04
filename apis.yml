@@ -1,0 +1,195 @@
+aid: launch27
+url: https://raw.githubusercontent.com/api-evangelist/launch27/refs/heads/main/apis.yml
+name: Launch27
+kind: company
+description: Launch27 is a booking and scheduling platform for cleaning service
+  businesses (maid services), offering online booking, customer/employee/team
+  management, recurring scheduling, payments, and marketing tools. Launch27 was
+  acquired by Fullsteam Operations in 2019 and continues to operate today as an
+  actively sold, independently branded product; Vonigo (a broader field service
+  management platform for home service businesses) is a sister brand under the
+  same Fullsteam Operations portfolio, acquired separately in 2022 - Launch27 is
+  not a Vonigo product line, though the two are frequently compared as
+  Fullsteam-owned competitors in the same space. Launch27 publishes a real,
+  actively used REST API (currently v2.1, with a deprecated v2.0) documented in
+  a public Bitbucket wiki linked from the Launch27 marketing site footer, rather
+  than in first-party developer docs at docs.launch27.com. The API is
+  multi-tenant, meaning every client account gets its own subdomain
+  (e.g. https://acme.launch27.com),
+  and covers booking creation/management for non-logged-in and logged-in
+  customers, booking-form helper data (services, spots, frequencies, custom
+  fields, price estimation), booking policies, and account settings.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Field Service Management
+- Home Services
+- Cleaning Services
+- Booking
+- Scheduling
+- Fullsteam
+- Vonigo
+created: '2026-07-04'
+modified: '2026-07-04'
+specificationVersion: '0.19'
+apis:
+- aid: launch27:launch27-authentication-api
+  name: Launch27 Authentication API
+  tags:
+  - Authentication
+  - Login
+  - JWT
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Login
+  baseURL: https://{tenant}.launch27.com/v1
+  properties:
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Home
+    type: Documentation
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/General_notes
+    type: APIReference
+  - url: openapi/launch27-openapi.yml
+    type: OpenAPI
+  - url: collections/launch27.postman_collection.json
+    type: Postman
+  - url: collections/launch27.opencollection.json
+    type: OpenCollection
+  description: Authenticate a Launch27 customer or staff user and return a JWT
+    (bearer token) used for subsequent authenticated requests. Legacy email:token
+    header authentication was retired March 1, 2023 in favor of JWT.
+- aid: launch27:launch27-account-settings-api
+  name: Launch27 Account Settings API
+  tags:
+  - Account
+  - Settings
+  - Configuration
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Get_settings
+  baseURL: https://{tenant}.launch27.com/v1
+  properties:
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_settings
+    type: APIReference
+  - url: openapi/launch27-openapi.yml
+    type: OpenAPI
+  - url: asyncapi/launch27-asyncapi.yml
+    type: AsyncAPI
+  - url: collections/launch27.postman_collection.json
+    type: Postman
+  description: Read a client account's configuration - branding, currency, country
+    and states, enabled feature flags (multi-location, gift cards, tips, sales tax,
+    SMS reminders, mobile app, etc.), locale/date preferences, accepted payment
+    methods, and the default location. Some fields (Stripe public key, team
+    permissions, alerts, admin id, and a wss:// pubsub notification URL) are only
+    present for authenticated staff/team requests.
+- aid: launch27:launch27-booking-helpers-api
+  name: Launch27 Booking Helpers API
+  tags:
+  - Bookings
+  - Services
+  - Spots
+  - Frequencies
+  - Pricing
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Services_for_booking
+  baseURL: https://{tenant}.launch27.com/v1
+  properties:
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_form_setup
+    type: Documentation
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Price_estimation_for_booking
+    type: APIReference
+  - url: openapi/launch27-openapi.yml
+    type: OpenAPI
+  - url: collections/launch27.postman_collection.json
+    type: Postman
+  - url: collections/launch27.opencollection.json
+    type: OpenCollection
+  description: Supporting data needed to build and price a booking form - the
+    booking form's field/heading/appearance setup, configured services/extras/
+    pricing parameters, available date/time spots (grid or list, for new bookings
+    or reschedules), location resolution by address, recurring frequencies (with
+    discounts), custom fields, next recurring service date for a frequency, and
+    detailed price/discount/tax estimation.
+- aid: launch27:launch27-booking-policies-api
+  name: Launch27 Booking Policies API
+  tags:
+  - Policy
+  - Cancellation
+  - Reschedule
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/New_booking_policy
+  baseURL: https://{tenant}.launch27.com/v1
+  properties:
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/New_booking_policy
+    type: APIReference
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_cancellation_policy
+    type: APIReference
+  - url: openapi/launch27-openapi.yml
+    type: OpenAPI
+  description: Read the account's new-booking lead-time policy, reschedule
+    lead-time policy, late-cancellation fee/percentage and reason-required
+    policy, and multi-location "prevent booking if no matching location" policy.
+    These policies are also enforced (not just described) by the Booking Helpers
+    API's spots endpoint.
+- aid: launch27:launch27-guest-booking-api
+  name: Launch27 Guest Booking API
+  tags:
+  - Bookings
+  - Non-Logged-In
+  - Checkout
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_as_non-logged-in
+  baseURL: https://{tenant}.launch27.com/v1
+  properties:
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_as_non-logged-in
+    type: APIReference
+  - url: openapi/launch27-openapi.yml
+    type: OpenAPI
+  - url: collections/launch27.postman_collection.json
+    type: Postman
+  description: Create a new booking as a first-time, non-logged-in customer -
+    submits customer details, address, service date/arrival window, selected
+    services/extras/pricing parameters, discount code, tip, custom field answers,
+    and payment method (cash, check, PayPal, or a Stripe.js token) in a single
+    call, used to power embeddable/white-label booking widgets.
+- aid: launch27:launch27-customer-bookings-api
+  name: Launch27 Customer Bookings API
+  tags:
+  - Bookings
+  - Customers
+  - CRUD
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Get_bookings_for_customer
+  baseURL: https://{tenant}.launch27.com/v1
+  properties:
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_bookings_for_customer
+    type: APIReference
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_for_customer
+    type: APIReference
+  - url: openapi/launch27-openapi.yml
+    type: OpenAPI
+  - url: collections/launch27.postman_collection.json
+    type: Postman
+  - url: collections/launch27.opencollection.json
+    type: OpenCollection
+  description: Authenticated customer-portal operations on a logged-in customer's
+    own bookings - list (with date range, free-text, completed/feedback filters,
+    paging), count, get a single booking's full detail, create a new booking
+    (including "book this again" from a prior booking), update/reschedule an
+    existing booking, and cancel a booking (handling late-cancellation
+    confirmation and recurring-series options).
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/launch-27
+- type: Website
+  url: https://www.launch27.com
+- type: Documentation
+  url: https://docs.launch27.com
+- type: APIReference
+  url: https://bitbucket.org/awoo23/api-2.0/wiki/Home
+- type: Plans
+  url: plans/launch27-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/launch27-rate-limits.yml
+- type: FinOps
+  url: finops/launch27-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

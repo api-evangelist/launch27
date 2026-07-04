@@ -1,0 +1,111 @@
+aid: launch27
+name: Launch27
+operatingStatus: active
+review:
+  question: Does Launch27 expose a documented public WebSocket API?
+  answer: true
+  date: '2026-07-04'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: true
+  asyncapiScopeNote: |
+    A minimal, honestly-scoped AsyncAPI document was created. Launch27's account
+    Settings endpoint (GET /settings, authenticated) returns a `pubsub_url`
+    attribute - a wss:// URL such as
+    "wss://pubsub.l27.co/v1/subscribe?channel=3yicbolh5nv4s8wv" - described in
+    the wiki as a "websocket notification subscription url". That one-line
+    mention is the entirety of what Launch27 documents about this channel: no
+    message/event schema, event type list, or subscription protocol (beyond
+    "connect and pass the channel query param") is published anywhere in the
+    wiki. The AsyncAPI document models the channel's existence, URL pattern, and
+    discovery mechanism (via Get Settings), and explicitly marks the payload
+    schema as undocumented rather than inventing message shapes.
+findings:
+  summary: |
+    Launch27 documents a real WebSocket channel, but only barely. The account
+    Settings response includes a `pubsub_url` field - present only for
+    authenticated requests - pointing at wss://pubsub.l27.co/v1/subscribe with a
+    channel query parameter unique to the account. The wiki's only description
+    is "websocket notification subscription url"; there is no dedicated wiki
+    page for it (unlike every REST endpoint, which each has its own page), no
+    documented message format, and no list of event types (e.g. booking
+    created/updated/cancelled) that might be pushed over it. Everything else in
+    Launch27's public API surface - authentication, account settings, booking
+    helpers (form setup, services, spots, location, frequencies, custom fields,
+    price estimation), booking policies, guest booking creation, and the
+    authenticated customer bookings CRUD surface - is plain request/response
+    REST over HTTPS, JSON in and out, documented in a community/engineering
+    Bitbucket wiki (not Launch27's first-party docs.launch27.com knowledge
+    base) and linked from the launch27.com site footer as "Launch27 API".
+  openSource: |
+    Launch27 is closed-source, commercial SaaS. There is no public repository
+    for the Launch27 application itself; the Bitbucket space that hosts the API
+    wiki (bitbucket.org/awoo23/api-2.0) contains only the wiki, not application
+    source code.
+  operatingStatusNote: |
+    Launch27 was acquired by Fullsteam Operations in 2019 and remains an
+    actively sold, independently branded product as of this review - the
+    public pricing page (Base/Pro/Plus), 14-day free trial signup, and support
+    channels are current and live. Vonigo is a separate Fullsteam Operations
+    portfolio company (acquired 2022), not Launch27's parent or successor
+    brand; no source found indicates Launch27 has been merged into or
+    rebranded as Vonigo.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://{tenant}.launch27.com/v1
+      documented: true
+      note: >-
+        Multi-tenant; every client account has its own subdomain. Sandbox
+        example host seen in docs: https://acme-sandbox.l27.co/latest/...
+        (some examples use a "/latest" path prefix rather than "/v1").
+    - protocol: WebSocket
+      scheme: wss
+      documented: true
+      note: >-
+        pubsub_url returned by GET /settings (authenticated only), e.g.
+        wss://pubsub.l27.co/v1/subscribe?channel={account_channel}. Existence
+        and URL pattern are documented; message/event schema is not.
+sources:
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Home
+    type: Documentation
+    note: Wiki home/index for Launch27 API 2.1 (current) and deprecated 2.0.
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/General_notes
+    type: Documentation
+    note: Base URLs per environment, JWT and legacy auth, rate limiting, error codes.
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Login
+    type: APIReference
+    note: POST /login; returns JWT bearer token.
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_settings
+    type: APIReference
+    note: GET /settings; documents the pubsub_url websocket field.
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Spots_for_booking
+    type: APIReference
+    note: POST /booking/spots; new vs reschedule policy enforcement.
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_as_non-logged-in
+    type: APIReference
+    note: POST /booking; guest booking creation.
+  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_bookings_for_customer
+    type: APIReference
+    note: GET /customer/bookings; authenticated customer booking list.
+  - url: https://www.launch27.com/
+    type: Website
+    note: Footer links to the Bitbucket API wiki as "Launch27 API".
+  - url: https://www.launch27.com/pricing/
+    type: Documentation
+    note: Base/Pro/Plus plan pricing, current as of review date.
+  - url: https://pitchbook.com/profiles/company/112657-78
+    type: Other
+    note: Launch27 acquired by Fullsteam Operations, May 31 2019.
+  - url: https://pitchbook.com/profiles/company/147726-73
+    type: Other
+    note: Vonigo acquired by Fullsteam Operations, Feb 7 2022 (separate transaction).
+actions:
+  asyncapiPath: asyncapi/launch27-asyncapi.yml
+  apisYmlUpdated: true
+  reason: |
+    A documented (if minimally so) wss:// channel exists, discovered via the
+    account Settings endpoint, so an AsyncAPI document was created to record
+    what is and is not known about it rather than treating Launch27 as REST-only.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,233 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Launch27 API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Authentication", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Login.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{{tenant}}.launch27.com/v1/login",
+            "body": { "type": "json", "data": "{ \"email\": \"user@email.com\", \"password\": \"trustno1\" }" }
+          },
+          "docs": "Authenticate and return a JWT bearer token used for subsequent authenticated requests."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Account", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get settings.", "type": "http" },
+          "http": { "method": "GET", "url": "https://{{tenant}}.launch27.com/v1/settings" },
+          "docs": "Returns account settings; response varies by authentication state, user type, and feature availability."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Booking Helpers", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get booking form setup.", "type": "http" },
+          "http": { "method": "GET", "url": "https://{{tenant}}.launch27.com/v1/booking/form" },
+          "docs": "Returns booking form headings, system fields, paragraphs, and appearance settings."
+        },
+        {
+          "info": { "name": "Get services for booking.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://{{tenant}}.launch27.com/v1/booking/services",
+            "params": [
+              { "name": "booking_uuid", "value": "", "type": "query", "description": "Booking digest; required (and requires auth) for an existing booking." },
+              { "name": "location_id", "value": "", "type": "query", "description": "Unique ID of location; default location used if omitted." }
+            ]
+          },
+          "docs": "Returns list of services, extras, and pricing parameters available for booking."
+        },
+        {
+          "info": { "name": "Get spots for booking.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{{tenant}}.launch27.com/v1/booking/spots",
+            "body": { "type": "json", "data": "{ \"date\": \"2026-08-15\", \"days\": 5, \"mode\": \"new\" }" }
+          },
+          "docs": "Returns spots available for booking on given date, mode (new or reschedule), and number of days."
+        },
+        {
+          "info": { "name": "Get location for booking address.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{{tenant}}.launch27.com/v1/booking/location",
+            "body": { "type": "json", "data": "{ \"zip\": \"94105\" }" }
+          },
+          "docs": "Returns location based on provided address details."
+        },
+        {
+          "info": { "name": "Get frequencies for booking.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://{{tenant}}.launch27.com/v1/booking/frequencies",
+            "params": [
+              { "name": "booking_uuid", "value": "", "type": "query", "description": "Booking digest; required (and requires auth) for an existing booking." },
+              { "name": "location_id", "value": "", "type": "query", "description": "Unique ID of location; default location used if omitted." }
+            ]
+          },
+          "docs": "Returns list of configured booking frequencies for new or existing booking."
+        },
+        {
+          "info": { "name": "Get next booking date for frequency.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{{tenant}}.launch27.com/v1/booking/frequencies/:id/next",
+            "params": [
+              { "name": "id", "value": "", "type": "path", "description": "Frequency unique ID." }
+            ],
+            "body": { "type": "json", "data": "{ \"date\": \"2026-08-06T13:30:00\" }" }
+          },
+          "docs": "Returns next booking date for a recurring frequency and given date."
+        },
+        {
+          "info": { "name": "Get custom fields for booking.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://{{tenant}}.launch27.com/v1/booking/custom_fields",
+            "params": [
+              { "name": "booking_uuid", "value": "", "type": "query", "description": "Booking digest; required (and requires auth) for an existing booking." }
+            ]
+          },
+          "docs": "Returns list of booking custom fields."
+        },
+        {
+          "info": { "name": "Estimate booking price.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{{tenant}}.launch27.com/v1/booking/estimate_price",
+            "body": { "type": "json", "data": "{ \"service_date\": \"2026-08-15T10:00:00\", \"frequency_id\": 1, \"services\": [{ \"id\": 1 }] }" }
+          },
+          "docs": "Estimates price for a booking and returns a detailed price/discount/tax breakdown."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Policy", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get new booking policy.", "type": "http" },
+          "http": { "method": "GET", "url": "https://{{tenant}}.launch27.com/v1/policy/booking" },
+          "docs": "Returns the new-booking lead-time policy details."
+        },
+        {
+          "info": { "name": "Get reschedule policy.", "type": "http" },
+          "http": { "method": "GET", "url": "https://{{tenant}}.launch27.com/v1/policy/reschedule" },
+          "docs": "Returns the reschedule lead-time policy details."
+        },
+        {
+          "info": { "name": "Get cancellation policy.", "type": "http" },
+          "http": { "method": "GET", "url": "https://{{tenant}}.launch27.com/v1/policy/cancellation" },
+          "docs": "Returns the late-cancellation fee/percentage and reason-required policy."
+        },
+        {
+          "info": { "name": "Get location policy.", "type": "http" },
+          "http": { "method": "GET", "url": "https://{{tenant}}.launch27.com/v1/policy/location" },
+          "docs": "Returns the prevent-booking-if-location-not-found policy for multi-location accounts."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Guest Booking", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create booking as non-logged-in.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{{tenant}}.launch27.com/v1/booking",
+            "body": { "type": "json", "data": "{ \"user\": { \"email\": \"user@email.com\", \"first_name\": \"First\", \"last_name\": \"Last\" }, \"address\": \"595 Market St\", \"city\": \"San Francisco\", \"state\": \"CA\", \"zip\": \"94105\", \"phone\": \"462-485-0790\", \"frequency_id\": 1, \"service_date\": \"2026-08-15T09:30:00\", \"arrival_window\": 0, \"services\": [{ \"id\": 1 }], \"payment_method\": \"cash\" }" }
+          },
+          "docs": "Creates a new booking as a first-time, non-logged-in customer."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Customer Bookings", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List bookings for customer.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://{{tenant}}.launch27.com/v1/customer/bookings",
+            "params": [
+              { "name": "from", "value": "", "type": "query", "description": "Start of date range." },
+              { "name": "to", "value": "", "type": "query", "description": "End of date range." },
+              { "name": "query", "value": "", "type": "query", "description": "Free-text search across address, city, phone." },
+              { "name": "options", "value": "", "type": "query", "description": "Comma-separated: completed, not_completed, with_feedback, without_feedback." },
+              { "name": "limit", "value": "", "type": "query", "description": "Page size." },
+              { "name": "offset", "value": "", "type": "query", "description": "Page offset." },
+              { "name": "sort", "value": "", "type": "query", "description": "asc or desc (default desc)." }
+            ]
+          },
+          "docs": "Returns active bookings for the logged-in customer."
+        },
+        {
+          "info": { "name": "Count bookings for customer.", "type": "http" },
+          "http": { "method": "GET", "url": "https://{{tenant}}.launch27.com/v1/customer/bookings/count" },
+          "docs": "Returns count of active bookings for the current customer user."
+        },
+        {
+          "info": { "name": "Create booking for customer.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{{tenant}}.launch27.com/v1/customer/bookings",
+            "body": { "type": "json", "data": "{ \"address\": \"595 Market St\", \"city\": \"San Francisco\", \"state\": \"CA\", \"zip\": \"94105\", \"phone\": \"462-485-0790\", \"frequency_id\": 2, \"service_date\": \"2026-08-20T09:30:00\", \"arrival_window\": 0, \"services\": [{ \"id\": 1 }], \"payment_method\": \"cash\" }" }
+          },
+          "docs": "Creates a new booking as the logged-in customer, including 'Book This Again' via original_booking_id."
+        },
+        {
+          "info": { "name": "Get booking for customer.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://{{tenant}}.launch27.com/v1/customer/bookings/:id",
+            "params": [
+              { "name": "id", "value": "", "type": "path", "description": "Booking unique ID." }
+            ]
+          },
+          "docs": "Returns a single booking's full detail."
+        },
+        {
+          "info": { "name": "Update booking for customer.", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://{{tenant}}.launch27.com/v1/customer/bookings/:id",
+            "params": [
+              { "name": "id", "value": "", "type": "path", "description": "Booking unique ID." }
+            ],
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Updates or reschedules an existing booking."
+        },
+        {
+          "info": { "name": "Cancel booking for customer.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{{tenant}}.launch27.com/v1/customer/bookings/:id/cancel",
+            "params": [
+              { "name": "id", "value": "", "type": "path", "description": "Booking unique ID." }
+            ],
+            "body": { "type": "json", "data": "{ \"confirmed_late\": false, \"reason\": \"booked by mistake\" }" }
+          },
+          "docs": "Cancels an existing booking and creates the next recurring booking if applicable."
+        }
+      ]
+    }
+  ]
+}

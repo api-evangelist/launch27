@@ -1,0 +1,83 @@
+asyncapi: '2.6.0'
+id: 'urn:com:launch27:pubsub:v1'
+info:
+  title: Launch27 Account Notification Channel (WebSocket, minimally documented)
+  version: '1.0.0'
+  description: |
+    AsyncAPI 2.6 description of the one WebSocket surface Launch27 documents:
+    an account-scoped notification channel reached via a `pubsub_url` returned
+    by the authenticated `GET /settings` call (see the companion OpenAPI
+    document at `openapi/launch27-openapi.yml`, schema `Settings.pubsub_url`).
+
+    Launch27's Bitbucket API wiki describes this in a single line, as part of
+    the Get Settings page: "pubsub_url is websocket notification subscription
+    url (requires authentication)", with the example value
+    `wss://pubsub.l27.co/v1/subscribe?channel=3yicbolh5nv4s8wv`.
+
+    That is the entirety of what is publicly documented. There is no dedicated
+    wiki page for this channel (every REST endpoint has one; this does not),
+    no published list of event/message types, and no published message
+    envelope or payload schema. This document intentionally models only what
+    is confirmed - channel discovery and the connection URL pattern - and
+    marks the message payload as unknown rather than inventing an event
+    catalog. Do not treat the `message` schema below as authoritative; verify
+    directly against a live account before relying on it.
+  contact:
+    name: API Evangelist
+    email: kin@apievangelist.com
+servers:
+  pubsub:
+    url: pubsub.l27.co/v1
+    protocol: wss
+    description: >-
+      Host is confirmed from a real Get Settings response example. Whether
+      this host is shared across all tenants or varies is not documented.
+defaultContentType: application/json
+channels:
+  subscribe:
+    description: >-
+      Single documented channel path. The `channel` query parameter value is
+      account-specific and is only obtainable by first calling the
+      authenticated `GET /settings` REST endpoint and reading `pubsub_url`
+      from the response - there is no separate "list channels" or
+      "create channel" API.
+    bindings:
+      ws:
+        method: GET
+        query:
+          type: object
+          properties:
+            channel:
+              type: string
+              description: >-
+                Account-specific channel identifier, obtained from
+                `pubsub_url` in the Get Settings REST response. Not otherwise
+                enumerable or documented.
+          required:
+            - channel
+    subscribe:
+      summary: Receive account notification events (message shape undocumented)
+      description: >-
+        Launch27 does not publish what event types are sent on this channel
+        or their payload shape. Given the channel is surfaced from the
+        account Settings endpoint alongside booking-related feature flags, it
+        is plausible (not confirmed) that it carries booking or account
+        change notifications for the customer/admin UI; this is inference,
+        not documentation, and is not asserted as fact.
+      message:
+        $ref: '#/components/messages/UndocumentedNotification'
+components:
+  messages:
+    UndocumentedNotification:
+      name: UndocumentedNotification
+      title: Undocumented notification payload
+      summary: >-
+        Placeholder for a message type Launch27 has not publicly documented.
+      contentType: application/json
+      payload:
+        type: object
+        description: >-
+          Message schema is not published by Launch27. This object is left
+          maximally open (no required fields, no asserted properties) rather
+          than guessed.
+        additionalProperties: true

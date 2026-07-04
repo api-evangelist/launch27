@@ -1,0 +1,240 @@
+{
+  "info": {
+    "name": "Launch27 API",
+    "description": "Multi-tenant booking API for Launch27 cleaning service accounts. Documented at https://bitbucket.org/awoo23/api-2.0/wiki/Home. Base URL is per-tenant: replace {{tenant}} with your Launch27 account subdomain. Authenticate via /login to obtain a JWT bearer token.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{bearerToken}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://{{tenant}}.launch27.com/v1", "type": "string" },
+    { "key": "tenant", "value": "acme-sandbox", "type": "string" },
+    { "key": "bearerToken", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "noauth" },
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@email.com\",\n  \"password\": \"trustno1\"\n}" },
+            "url": { "raw": "{{baseUrl}}/login", "host": ["{{baseUrl}}"], "path": ["login"] },
+            "description": "Authenticate and return a JWT bearer token used by all authenticated requests below."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "Get Settings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/settings", "host": ["{{baseUrl}}"], "path": ["settings"] },
+            "description": "Returns account settings. Response varies by authentication state and user type."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Booking Helpers",
+      "item": [
+        {
+          "name": "Get Booking Form Setup",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": { "type": "noauth" },
+            "url": { "raw": "{{baseUrl}}/booking/form", "host": ["{{baseUrl}}"], "path": ["booking", "form"] }
+          }
+        },
+        {
+          "name": "Get Services for Booking",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": { "type": "noauth" },
+            "url": { "raw": "{{baseUrl}}/booking/services", "host": ["{{baseUrl}}"], "path": ["booking", "services"] }
+          }
+        },
+        {
+          "name": "Get Spots for Booking",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "noauth" },
+            "body": { "mode": "raw", "raw": "{\n  \"date\": \"2026-08-15\",\n  \"days\": 5,\n  \"mode\": \"new\"\n}" },
+            "url": { "raw": "{{baseUrl}}/booking/spots", "host": ["{{baseUrl}}"], "path": ["booking", "spots"] }
+          }
+        },
+        {
+          "name": "Get Location for Booking Address",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "noauth" },
+            "body": { "mode": "raw", "raw": "{\n  \"zip\": \"94105\"\n}" },
+            "url": { "raw": "{{baseUrl}}/booking/location", "host": ["{{baseUrl}}"], "path": ["booking", "location"] }
+          }
+        },
+        {
+          "name": "Get Frequencies for Booking",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": { "type": "noauth" },
+            "url": { "raw": "{{baseUrl}}/booking/frequencies", "host": ["{{baseUrl}}"], "path": ["booking", "frequencies"] }
+          }
+        },
+        {
+          "name": "Get Next Booking Date for Frequency",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"date\": \"2026-08-06T13:30:00\"\n}" },
+            "url": { "raw": "{{baseUrl}}/booking/frequencies/:id/next", "host": ["{{baseUrl}}"], "path": ["booking", "frequencies", ":id", "next"], "variable": [{ "key": "id", "value": "2" }] }
+          }
+        },
+        {
+          "name": "Get Custom Fields for Booking",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": { "type": "noauth" },
+            "url": { "raw": "{{baseUrl}}/booking/custom_fields", "host": ["{{baseUrl}}"], "path": ["booking", "custom_fields"] }
+          }
+        },
+        {
+          "name": "Estimate Booking Price",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "noauth" },
+            "body": { "mode": "raw", "raw": "{\n  \"service_date\": \"2026-08-15T10:00:00\",\n  \"frequency_id\": 1,\n  \"services\": [{ \"id\": 1 }]\n}" },
+            "url": { "raw": "{{baseUrl}}/booking/estimate_price", "host": ["{{baseUrl}}"], "path": ["booking", "estimate_price"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Policy",
+      "item": [
+        {
+          "name": "Get New Booking Policy",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": { "type": "noauth" },
+            "url": { "raw": "{{baseUrl}}/policy/booking", "host": ["{{baseUrl}}"], "path": ["policy", "booking"] }
+          }
+        },
+        {
+          "name": "Get Reschedule Policy",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/policy/reschedule", "host": ["{{baseUrl}}"], "path": ["policy", "reschedule"] }
+          }
+        },
+        {
+          "name": "Get Cancellation Policy",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/policy/cancellation", "host": ["{{baseUrl}}"], "path": ["policy", "cancellation"] }
+          }
+        },
+        {
+          "name": "Get Location Policy",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": { "type": "noauth" },
+            "url": { "raw": "{{baseUrl}}/policy/location", "host": ["{{baseUrl}}"], "path": ["policy", "location"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Guest Booking",
+      "item": [
+        {
+          "name": "Create Booking (Non-Logged-In)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "noauth" },
+            "body": { "mode": "raw", "raw": "{\n  \"user\": { \"email\": \"user@email.com\", \"first_name\": \"First\", \"last_name\": \"Last\" },\n  \"address\": \"595 Market St\",\n  \"city\": \"San Francisco\",\n  \"state\": \"CA\",\n  \"zip\": \"94105\",\n  \"phone\": \"462-485-0790\",\n  \"frequency_id\": 1,\n  \"service_date\": \"2026-08-15T09:30:00\",\n  \"arrival_window\": 0,\n  \"services\": [{ \"id\": 1 }],\n  \"payment_method\": \"cash\"\n}" },
+            "url": { "raw": "{{baseUrl}}/booking", "host": ["{{baseUrl}}"], "path": ["booking"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customer Bookings",
+      "item": [
+        {
+          "name": "List Bookings for Customer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/customer/bookings", "host": ["{{baseUrl}}"], "path": ["customer", "bookings"] }
+          }
+        },
+        {
+          "name": "Count Bookings for Customer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/customer/bookings/count", "host": ["{{baseUrl}}"], "path": ["customer", "bookings", "count"] }
+          }
+        },
+        {
+          "name": "Create Booking for Customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"address\": \"595 Market St\",\n  \"city\": \"San Francisco\",\n  \"state\": \"CA\",\n  \"zip\": \"94105\",\n  \"phone\": \"462-485-0790\",\n  \"frequency_id\": 2,\n  \"service_date\": \"2026-08-20T09:30:00\",\n  \"arrival_window\": 0,\n  \"services\": [{ \"id\": 1 }],\n  \"payment_method\": \"cash\"\n}" },
+            "url": { "raw": "{{baseUrl}}/customer/bookings", "host": ["{{baseUrl}}"], "path": ["customer", "bookings"] }
+          }
+        },
+        {
+          "name": "Get Booking for Customer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/customer/bookings/:id", "host": ["{{baseUrl}}"], "path": ["customer", "bookings", ":id"], "variable": [{ "key": "id", "value": "1" }] }
+          }
+        },
+        {
+          "name": "Update Booking for Customer",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"address\": \"595 Market St\",\n  \"city\": \"San Francisco\",\n  \"state\": \"CA\",\n  \"zip\": \"94105\",\n  \"phone\": \"462-485-0790\",\n  \"frequency_id\": 1,\n  \"service_date\": \"2026-08-20T09:30:00\",\n  \"arrival_window\": 0,\n  \"services\": [{ \"id\": 1 }],\n  \"payment_method\": \"cash\"\n}" },
+            "url": { "raw": "{{baseUrl}}/customer/bookings/:id", "host": ["{{baseUrl}}"], "path": ["customer", "bookings", ":id"], "variable": [{ "key": "id", "value": "1" }] }
+          }
+        },
+        {
+          "name": "Cancel Booking for Customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"confirmed_late\": false,\n  \"reason\": \"booked by mistake\"\n}" },
+            "url": { "raw": "{{baseUrl}}/customer/bookings/:id/cancel", "host": ["{{baseUrl}}"], "path": ["customer", "bookings", ":id", "cancel"], "variable": [{ "key": "id", "value": "1" }] }
+          }
+        }
+      ]
+    }
+  ]
+}

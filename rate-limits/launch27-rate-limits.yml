@@ -1,0 +1,62 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Launch27
+providerId: launch27
+created: '2026-07-04'
+modified: '2026-07-04'
+reconciled: false
+tags:
+- Field Service Management
+- Cleaning Services
+- Booking
+- Rate Limiting
+- Quotas
+description: >-
+  Launch27 documents a token-bucket rate limiter applied per client IP
+  address, with read requests and write requests limited separately. The
+  current limits are echoed back in response headers on every call, rather
+  than only published as static numbers in the docs - the documented example
+  values are a sustained rate of roughly 2 requests/second for both reads and
+  writes, with burst allowances of 30 (read) and 10 (write) requests.
+notes: >-
+  Because limits are returned per-response (x-rate-limit-read-limit,
+  x-rate-limit-read-ttl, x-rate-limit-write-limit, x-rate-limit-write-ttl),
+  the numeric values below are the documented example, not a contractual
+  guarantee; verify against live response headers for a given account.
+sources:
+- https://bitbucket.org/awoo23/api-2.0/wiki/General_notes
+responseCodes:
+  throttled: 429
+limits:
+- name: Read Requests
+  scope: client_ip
+  metric: requests
+  limit: '30 burst, ~2/sec sustained (documented example: x-rate-limit-read-limit=30, ttl=500ms)'
+  notes: Applies to GET endpoints; returned live in x-rate-limit-read-* response headers.
+- name: Write Requests
+  scope: client_ip
+  metric: requests
+  limit: '10 burst, ~2/sec sustained (documented example: x-rate-limit-write-limit=10, ttl=500ms)'
+  notes: Applies to POST/PUT/DELETE endpoints; returned live in x-rate-limit-write-* response headers.
+- name: Login Lockout
+  scope: account
+  metric: failed_attempts
+  limit: 5 invalid attempts within 1 minute
+  notes: Triggers a 403 Forbidden account lockout for 5 minutes. Already-logged-in users are unaffected until logout.
+policies:
+- name: Token Bucket
+  description: >-
+    Limiter is described as a token bucket (https://en.wikipedia.org/wiki/Token_bucket);
+    actual sustained throughput depends on recent request activity, not just the burst number.
+- name: Per-IP Scope
+  description: Documented limits are applied per client IP address, not per account or API token.
+- name: Header-Reported Limits
+  description: >-
+    Every response carries the current effective limit and TTL in
+    x-rate-limit-read-limit / x-rate-limit-read-ttl / x-rate-limit-write-limit
+    / x-rate-limit-write-ttl headers, so clients can read actual limits live
+    rather than relying solely on documentation.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

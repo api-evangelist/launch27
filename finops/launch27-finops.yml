@@ -1,0 +1,93 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Launch27
+providerId: launch27
+created: '2026-07-04'
+modified: '2026-07-04'
+reconciled: false
+tags:
+- Field Service Management
+- Cleaning Services
+- Booking
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Launch27 spend. Launch27 is billed as a flat per-account
+  monthly or annual subscription across three tiers (Base/Pro/Plus); it is not
+  usage-metered by API call volume, booking count, or seat count - all tiers
+  include unlimited users and unlimited bookings. The API itself carries no
+  separate charge: it is bundled access used by Launch27's own booking widgets
+  and the authenticated customer portal, tied to whichever tier the account
+  already pays for. The dominant variable cost most Launch27 customers
+  actually track is payment processing (credit card transaction fees on
+  customer charges collected through the platform), which is outside
+  Launch27's own subscription price and governed by whatever payment
+  processor (e.g. Stripe) the account is linked to.
+notes: >-
+  Per-unit payment-processing rates are not published by Launch27 and are not
+  reconciled here; verify current subscription tier pricing on the Launch27
+  pricing page and payment processing rates with the linked processor.
+sources:
+- https://www.launch27.com/pricing/
+- https://www.launch27.com/faq/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Launch27
+serviceCategory: Field Service Management Software
+billingModel:
+  pricingCategory: Flat-Rate Subscription
+  billingFrequency: Monthly or Annual
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Launch27
+  ServiceCategory: Field Service Management Software
+  ProviderName: Launch27
+  PublisherName: Launch27
+  InvoiceIssuerName: Launch27 (Fullsteam Operations)
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Flat-Rate Subscription
+meters:
+- name: subscription_tier
+  description: Monthly or annual flat subscription fee for the account's plan (Base, Pro, or Plus).
+  unit: account_months
+  aggregation: sum
+  dimensions:
+  - account
+  - plan_tier
+- name: payment_processing
+  description: >-
+    Credit card / online payment transaction fees charged by the linked
+    processor (e.g. Stripe) on customer bookings collected through Launch27;
+    not a Launch27 API or subscription charge.
+  unit: usd
+  aggregation: sum
+  dimensions:
+  - account
+  - processor
+principles:
+- name: Visibility
+  description: Track subscription tier and renewal cadence per account; track payment-processing fees separately from the Launch27 subscription invoice.
+- name: Allocation
+  description: For multi-brand or franchise operators running several Launch27 accounts, allocate each account's subscription and processing fees to its own cost center.
+- name: Optimization
+  description: >-
+    Because tiers are feature-gated rather than usage-metered, optimize by
+    matching tier to needed features (SMS, gift cards, multi-location, mobile
+    app) rather than by managing API call volume; annual billing carries a
+    15% discount versus monthly.
+- name: Accountability
+  description: Assign an owner for the Launch27 subscription renewal and for the linked payment processor relationship.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
