@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/launch27-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: 'JWT returned as `bearer` in the Login response. Sent as `Authorization: Bearer
+    <JWT>`. A legacy `email:token` form (Authorization: email:token) existed but was retired
+    March 1, 2023.'
+  sources:
+  - openapi/launch27-openapi.yml

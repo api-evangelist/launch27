@@ -176,6 +176,12 @@ apis:
     existing booking, and cancel a booking (handling late-cancellation
     confirmation and recurring-series options).
 common:
+- type: VulnerabilityDisclosure
+  url: security/launch27-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/launch27-domain-security.yml
+- type: Authentication
+  url: authentication/launch27-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/launch-27
 - type: Website
@@ -190,6 +196,8 @@ common:
   url: rate-limits/launch27-rate-limits.yml
 - type: FinOps
   url: finops/launch27-finops.yml
+- type: Blog
+  url: https://launch27.com/feed/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
