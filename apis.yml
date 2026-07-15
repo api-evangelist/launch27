@@ -176,6 +176,8 @@ apis:
     existing booking, and cancel a booking (handling late-cancellation
     confirmation and recurring-series options).
 common:
+- type: AgenticAccess
+  url: agentic-access/launch27-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/launch27-vulnerability-disclosure.yml
 - type: DomainSecurity
