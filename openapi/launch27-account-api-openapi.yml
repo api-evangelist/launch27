@@ -1,0 +1,103 @@
+openapi: 3.0.3
+info:
+  title: Launch27 Account API
+  description: 'Unofficial-but-real, actively used REST API for Launch27, a booking and scheduling platform for cleaning service businesses. Documented in a public Bitbucket wiki (https://bitbucket.org/awoo23/api-2.0/wiki/Home) linked from the launch27.com site footer, rather than in Launch27''s first-party docs.launch27.com knowledge base. The API is multi-tenant: every client account has its own subdomain. This document models the current v2.1 surface (the deprecated v2.0 surface is not modeled). Not every endpoint mentioned in the wiki is represented here in full schema detail; refer to the wiki pages linked per operation for complete field-by-field documentation.'
+  version: '2.1'
+  contact:
+    name: API Evangelist
+    email: kin@apievangelist.com
+servers:
+- url: https://{tenant}.launch27.com/v1
+  description: Production (per-tenant subdomain)
+  variables:
+    tenant:
+      default: acme
+      description: Launch27 client account subdomain.
+- url: https://{tenant}.l27.co/v1
+  description: Testing/sandbox (per-tenant subdomain)
+  variables:
+    tenant:
+      default: acme-sandbox
+      description: Launch27 sandbox account subdomain.
+security:
+- bearerAuth: []
+tags:
+- name: Account
+  description: Account/tenant settings and configuration.
+paths:
+  /settings:
+    get:
+      operationId: getSettings
+      tags:
+      - Account
+      summary: Get account settings
+      security:
+      - bearerAuth: []
+      - {}
+      description: Returns account configuration. Response content varies by authentication state, user type, and feature availability - some fields (stripe_public_key, team_permissions, alerts, admin_id, pubsub_url, quickbooks_authorized) require authentication and/or a staff/team user type.
+      responses:
+        '200':
+          description: Account settings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Settings'
+components:
+  schemas:
+    Settings:
+      type: object
+      description: See https://bitbucket.org/awoo23/api-2.0/wiki/Get_settings for full attribute documentation.
+      additionalProperties: true
+      properties:
+        logo:
+          type: string
+          format: uri
+        color:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - trial
+          - active
+          - frozen
+          - sleep
+        sandbox:
+          type: boolean
+        setup_complete:
+          type: boolean
+        timezone:
+          type: string
+        currency:
+          type: object
+          properties:
+            code:
+              type: string
+            symbol:
+              type: string
+        country:
+          type: object
+          additionalProperties: true
+        features:
+          type: object
+          additionalProperties: true
+        payment_methods:
+          type: object
+          additionalProperties: true
+        default_location:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        pubsub_url:
+          type: string
+          description: 'wss:// notification subscription URL, present only when authenticated. Example: wss://pubsub.l27.co/v1/subscribe?channel=3yicbolh5nv4s8wv'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'JWT returned as `bearer` in the Login response. Sent as `Authorization: Bearer <JWT>`. A legacy `email:token` form (Authorization: email:token) existed but was retired March 1, 2023.'

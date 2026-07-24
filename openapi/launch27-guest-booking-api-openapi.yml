@@ -1,0 +1,210 @@
+openapi: 3.0.3
+info:
+  title: Launch27 Account Guest Booking API
+  description: 'Unofficial-but-real, actively used REST API for Launch27, a booking and scheduling platform for cleaning service businesses. Documented in a public Bitbucket wiki (https://bitbucket.org/awoo23/api-2.0/wiki/Home) linked from the launch27.com site footer, rather than in Launch27''s first-party docs.launch27.com knowledge base. The API is multi-tenant: every client account has its own subdomain. This document models the current v2.1 surface (the deprecated v2.0 surface is not modeled). Not every endpoint mentioned in the wiki is represented here in full schema detail; refer to the wiki pages linked per operation for complete field-by-field documentation.'
+  version: '2.1'
+  contact:
+    name: API Evangelist
+    email: kin@apievangelist.com
+servers:
+- url: https://{tenant}.launch27.com/v1
+  description: Production (per-tenant subdomain)
+  variables:
+    tenant:
+      default: acme
+      description: Launch27 client account subdomain.
+- url: https://{tenant}.l27.co/v1
+  description: Testing/sandbox (per-tenant subdomain)
+  variables:
+    tenant:
+      default: acme-sandbox
+      description: Launch27 sandbox account subdomain.
+security:
+- bearerAuth: []
+tags:
+- name: Guest Booking
+  description: Booking creation for non-logged-in customers.
+paths:
+  /booking:
+    post:
+      operationId: createGuestBooking
+      tags:
+      - Guest Booking
+      summary: Create a new booking as a non-logged-in customer
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuestBookingRequest'
+      responses:
+        '200':
+          description: Booking created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingCreatedResponse'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+components:
+  schemas:
+    BookingCreatedResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        ga_transaction:
+          type: object
+          additionalProperties: true
+        ga_item:
+          type: object
+          additionalProperties: true
+    GuestBookingRequest:
+      type: object
+      required:
+      - user
+      - address
+      - frequency_id
+      - service_date
+      - arrival_window
+      - services
+      - payment_method
+      properties:
+        location_id:
+          type: integer
+          nullable: true
+        user:
+          type: object
+          required:
+          - email
+          - first_name
+          - last_name
+          properties:
+            email:
+              type: string
+              format: email
+            first_name:
+              type: string
+            last_name:
+              type: string
+            company_name:
+              type: string
+              nullable: true
+        address:
+          type: string
+        city:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+        zip:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        sms_notifications:
+          type: boolean
+          nullable: true
+        frequency_id:
+          type: integer
+        service_date:
+          type: string
+        arrival_window:
+          type: integer
+          minimum: 0
+          maximum: 1440
+        services:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ServiceSelection'
+        discount_code:
+          type: string
+          nullable: true
+        tip:
+          type: number
+          nullable: true
+        tip_recurring:
+          type: boolean
+          nullable: true
+        payment_method:
+          type: string
+          enum:
+          - stripe
+          - paypal
+          - cash
+          - check
+        stripe_token:
+          type: string
+          nullable: true
+          description: Required if payment_method=stripe. Generated via Stripe.js using stripe_public_key from Get Settings.
+        customer_notes:
+          type: string
+          nullable: true
+        custom_fields:
+          type: array
+          nullable: true
+          items:
+            type: object
+            additionalProperties: true
+    ServiceSelection:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: integer
+        hourly:
+          type: object
+          nullable: true
+          properties:
+            quantity:
+              type: integer
+            minutes:
+              type: integer
+        extras:
+          type: array
+          nullable: true
+          items:
+            type: object
+            required:
+            - id
+            - quantity
+            properties:
+              id:
+                type: integer
+              quantity:
+                type: integer
+              recurring:
+                type: boolean
+                nullable: true
+        pricing_parameters:
+          type: array
+          nullable: true
+          items:
+            type: object
+            required:
+            - id
+            - quantity
+            properties:
+              id:
+                type: integer
+              quantity:
+                type: integer
+  responses:
+    ValidationError:
+      description: JSON schema or data validation error.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'JWT returned as `bearer` in the Login response. Sent as `Authorization: Bearer <JWT>`. A legacy `email:token` form (Authorization: email:token) existed but was retired March 1, 2023.'

@@ -1,0 +1,128 @@
+openapi: 3.0.3
+info:
+  title: Launch27 Account Policy API
+  description: 'Unofficial-but-real, actively used REST API for Launch27, a booking and scheduling platform for cleaning service businesses. Documented in a public Bitbucket wiki (https://bitbucket.org/awoo23/api-2.0/wiki/Home) linked from the launch27.com site footer, rather than in Launch27''s first-party docs.launch27.com knowledge base. The API is multi-tenant: every client account has its own subdomain. This document models the current v2.1 surface (the deprecated v2.0 surface is not modeled). Not every endpoint mentioned in the wiki is represented here in full schema detail; refer to the wiki pages linked per operation for complete field-by-field documentation.'
+  version: '2.1'
+  contact:
+    name: API Evangelist
+    email: kin@apievangelist.com
+servers:
+- url: https://{tenant}.launch27.com/v1
+  description: Production (per-tenant subdomain)
+  variables:
+    tenant:
+      default: acme
+      description: Launch27 client account subdomain.
+- url: https://{tenant}.l27.co/v1
+  description: Testing/sandbox (per-tenant subdomain)
+  variables:
+    tenant:
+      default: acme-sandbox
+      description: Launch27 sandbox account subdomain.
+security:
+- bearerAuth: []
+tags:
+- name: Policy
+  description: Booking, reschedule, cancellation, and location policies.
+paths:
+  /policy/booking:
+    get:
+      operationId: getNewBookingPolicy
+      tags:
+      - Policy
+      summary: Get new booking policy
+      security: []
+      responses:
+        '200':
+          description: New booking lead-time policy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadTimePolicy'
+  /policy/reschedule:
+    get:
+      operationId: getRescheduleBookingPolicy
+      tags:
+      - Policy
+      summary: Get booking reschedule policy
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Reschedule lead-time policy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadTimePolicy'
+  /policy/cancellation:
+    get:
+      operationId: getCancellationPolicy
+      tags:
+      - Policy
+      summary: Get booking cancellation policy
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Cancellation fee/percent and reason-required policy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancellationPolicy'
+  /policy/location:
+    get:
+      operationId: getLocationPolicy
+      tags:
+      - Policy
+      summary: Get "prevent booking if location not found" policy
+      security: []
+      responses:
+        '200':
+          description: Location policy.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prevent_booking:
+                    type: boolean
+                  prevent_booking_text:
+                    type: string
+components:
+  schemas:
+    LeadTimePolicy:
+      type: object
+      properties:
+        custom:
+          type: boolean
+        unit:
+          type: string
+          enum:
+          - hour
+          - day
+        quantity:
+          type: integer
+    CancellationPolicy:
+      type: object
+      properties:
+        custom:
+          type: boolean
+        unit:
+          type: string
+          enum:
+          - hour
+          - day
+        quantity:
+          type: integer
+        late_cancellation_fee:
+          type: number
+        late_cancellation_percent:
+          type: number
+        cancellation_reason_on:
+          type: boolean
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'JWT returned as `bearer` in the Login response. Sent as `Authorization: Bearer <JWT>`. A legacy `email:token` form (Authorization: email:token) existed but was retired March 1, 2023.'

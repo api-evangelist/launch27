@@ -1,0 +1,525 @@
+openapi: 3.0.3
+info:
+  title: Launch27 Account Booking Helpers API
+  description: 'Unofficial-but-real, actively used REST API for Launch27, a booking and scheduling platform for cleaning service businesses. Documented in a public Bitbucket wiki (https://bitbucket.org/awoo23/api-2.0/wiki/Home) linked from the launch27.com site footer, rather than in Launch27''s first-party docs.launch27.com knowledge base. The API is multi-tenant: every client account has its own subdomain. This document models the current v2.1 surface (the deprecated v2.0 surface is not modeled). Not every endpoint mentioned in the wiki is represented here in full schema detail; refer to the wiki pages linked per operation for complete field-by-field documentation.'
+  version: '2.1'
+  contact:
+    name: API Evangelist
+    email: kin@apievangelist.com
+servers:
+- url: https://{tenant}.launch27.com/v1
+  description: Production (per-tenant subdomain)
+  variables:
+    tenant:
+      default: acme
+      description: Launch27 client account subdomain.
+- url: https://{tenant}.l27.co/v1
+  description: Testing/sandbox (per-tenant subdomain)
+  variables:
+    tenant:
+      default: acme-sandbox
+      description: Launch27 sandbox account subdomain.
+security:
+- bearerAuth: []
+tags:
+- name: Booking Helpers
+  description: Supporting data for building and pricing a booking form.
+paths:
+  /booking/form:
+    get:
+      operationId: getBookingForm
+      tags:
+      - Booking Helpers
+      summary: Get booking form setup
+      security: []
+      parameters:
+      - name: type
+        in: query
+        required: false
+        description: Booking form type (requires features.new_booking_form_widget).
+        schema:
+          type: string
+          enum:
+          - cleaning
+          - auto
+          - lawn
+          - carpet
+      responses:
+        '200':
+          description: Booking form headings, system fields, paragraphs, and appearance settings.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /booking/services:
+    get:
+      operationId: getBookingServices
+      tags:
+      - Booking Helpers
+      summary: Get services available for booking
+      security:
+      - bearerAuth: []
+      - {}
+      parameters:
+      - $ref: '#/components/parameters/BookingUuid'
+      - $ref: '#/components/parameters/LocationId'
+      responses:
+        '200':
+          description: List of available services.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+  /booking/spots:
+    post:
+      operationId: getBookingSpots
+      tags:
+      - Booking Helpers
+      summary: Get available spots for booking
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpotsRequest'
+      responses:
+        '200':
+          description: Available spots by date (or grid + days if grid=true).
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /booking/location:
+    post:
+      operationId: getBookingLocation
+      tags:
+      - Booking Helpers
+      summary: Resolve location for a booking address
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationRequest'
+      responses:
+        '200':
+          description: Resolved location.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+  /booking/frequencies:
+    get:
+      operationId: getBookingFrequencies
+      tags:
+      - Booking Helpers
+      summary: Get frequencies available for booking
+      security:
+      - bearerAuth: []
+      - {}
+      parameters:
+      - $ref: '#/components/parameters/BookingUuid'
+      - $ref: '#/components/parameters/LocationId'
+      responses:
+        '200':
+          description: List of configured frequencies.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Frequency'
+  /booking/frequencies/{id}/next:
+    post:
+      operationId: getNextBookingDateForFrequency
+      tags:
+      - Booking Helpers
+      summary: Get next recurring booking date for a frequency
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Frequency unique ID.
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - date
+              properties:
+                date:
+                  type: string
+                  description: YYYY-MM-DDTHH:MM:SS
+      responses:
+        '200':
+          description: Next recurring date.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date-time
+        '422':
+          description: Schema error, or frequency is not recurring.
+  /booking/custom_fields:
+    get:
+      operationId: getBookingCustomFields
+      tags:
+      - Booking Helpers
+      summary: Get custom fields for booking
+      security:
+      - bearerAuth: []
+      - {}
+      parameters:
+      - $ref: '#/components/parameters/BookingUuid'
+      responses:
+        '200':
+          description: List of custom fields.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomField'
+  /booking/estimate_price:
+    post:
+      operationId: estimateBookingPrice
+      tags:
+      - Booking Helpers
+      summary: Estimate price for a booking
+      security:
+      - bearerAuth: []
+      - {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriceEstimateRequest'
+      responses:
+        '200':
+          description: Price estimate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceEstimate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Customer has no access to booking.
+components:
+  schemas:
+    PriceEstimate:
+      type: object
+      properties:
+        services:
+          type: number
+        extras:
+          type: number
+        discount_amount:
+          type: number
+        discount_message:
+          type: string
+        giftcard_amount:
+          type: number
+        price_adjustment:
+          type: number
+        tax:
+          type: object
+          additionalProperties: true
+        tip:
+          type: number
+        total:
+          type: number
+        next_total:
+          type: number
+        duration:
+          type: integer
+        price_for_frequency:
+          type: number
+        price_for_discount_by_code:
+          type: number
+        price_recurring_for_frequency:
+          type: number
+    PriceEstimateRequest:
+      type: object
+      required:
+      - service_date
+      - frequency_id
+      - services
+      properties:
+        email:
+          type: string
+          format: email
+        booking_uuid:
+          type: string
+          nullable: true
+        original_booking_id:
+          type: integer
+          nullable: true
+        service_date:
+          type: string
+        location_id:
+          type: integer
+          nullable: true
+        frequency_id:
+          type: integer
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceSelection'
+        discount_code:
+          type: string
+          nullable: true
+        tip:
+          type: number
+          nullable: true
+        tip_recurring:
+          type: boolean
+          nullable: true
+        price_adjustment:
+          type: number
+          nullable: true
+          description: Staff-only.
+        final_price:
+          type: number
+          nullable: true
+          description: Staff-only.
+    ServiceSelection:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: integer
+        hourly:
+          type: object
+          nullable: true
+          properties:
+            quantity:
+              type: integer
+            minutes:
+              type: integer
+        extras:
+          type: array
+          nullable: true
+          items:
+            type: object
+            required:
+            - id
+            - quantity
+            properties:
+              id:
+                type: integer
+              quantity:
+                type: integer
+              recurring:
+                type: boolean
+                nullable: true
+        pricing_parameters:
+          type: array
+          nullable: true
+          items:
+            type: object
+            required:
+            - id
+            - quantity
+            properties:
+              id:
+                type: integer
+              quantity:
+                type: integer
+    Extra:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        quantity_based:
+          type: boolean
+        recurring:
+          type: boolean
+        discount_by_frequency:
+          type: boolean
+        discount_by_code:
+          type: boolean
+    LocationRequest:
+      type: object
+      properties:
+        address:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+        zip:
+          type: string
+          nullable: true
+    CustomField:
+      type: object
+      properties:
+        id:
+          type: integer
+        code:
+          type: string
+        label:
+          type: string
+        control_type:
+          type: string
+          enum:
+          - single_line
+          - multi_line
+          - radio_buttons
+          - checkboxes
+          - drop_down
+          - plain_text
+          - date
+          - datetime
+          - checkbox
+        value_required:
+          type: boolean
+        visible:
+          type: boolean
+        ordering:
+          type: integer
+        default_value:
+          type: string
+        options:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    Frequency:
+      type: object
+      properties:
+        id:
+          type: integer
+        interval:
+          type: string
+          description: '''o'' = one time; otherwise a recurring interval pattern like 1w, 2m15d.'
+        name:
+          type: string
+        percent:
+          type: number
+        amount:
+          type: number
+        exclude_first:
+          type: boolean
+        default:
+          type: boolean
+    SpotsRequest:
+      type: object
+      required:
+      - date
+      - days
+      - mode
+      properties:
+        date:
+          type: string
+          format: date
+        days:
+          type: integer
+          minimum: 1
+          maximum: 7
+        mode:
+          type: string
+          enum:
+          - new
+          - reschedule
+        location_id:
+          type: integer
+          nullable: true
+        grid:
+          type: boolean
+          nullable: true
+    Service:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        commercial:
+          type: boolean
+        discount_by_frequency:
+          type: boolean
+        discount_by_code:
+          type: boolean
+        hourly:
+          type: object
+          nullable: true
+          additionalProperties: true
+        extras:
+          type: array
+          items:
+            $ref: '#/components/schemas/Extra'
+        pricing_parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/PricingParameter'
+    PricingParameter:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        quantity_minimum:
+          type: integer
+        quantity_maximum:
+          type: integer
+  responses:
+    Unauthorized:
+      description: Missing/invalid Authorization header, or invalid credentials.
+  parameters:
+    BookingUuid:
+      name: booking_uuid
+      in: query
+      required: false
+      description: Booking digest; required (and requires auth) when requesting for an existing booking.
+      schema:
+        type: string
+    LocationId:
+      name: location_id
+      in: query
+      required: false
+      description: Unique ID of location; default location used if omitted.
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'JWT returned as `bearer` in the Login response. Sent as `Authorization: Bearer <JWT>`. A legacy `email:token` form (Authorization: email:token) existed but was retired March 1, 2023.'
