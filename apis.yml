@@ -19,7 +19,20 @@ description: Launch27 is a booking and scheduling platform for cleaning service
   and covers booking creation/management for non-logged-in and logged-in
   customers, booking-form helper data (services, spots, frequencies, custom
   fields, price estimation), booking policies, and account settings.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: true
+  try_now: true
+  public: false
+  label: Freemium (free trial) · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/launch27.png
 tags:
 - Field Service Management
 - Home Services
@@ -32,149 +45,222 @@ created: '2026-07-04'
 modified: '2026-07-04'
 specificationVersion: '0.19'
 apis:
-- aid: launch27:launch27-authentication-api
-  name: Launch27 Authentication API
-  tags:
-  - Authentication
-  - Login
-  - JWT
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: launch27:launch27-account-api
+  name: Launch27 Account API
+  description: Account/tenant settings and configuration.
   humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Login
   baseURL: https://{tenant}.launch27.com/v1
-  properties:
-  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Home
-    type: Documentation
-  - url: https://bitbucket.org/awoo23/api-2.0/wiki/General_notes
-    type: APIReference
-  - url: openapi/launch27-openapi.yml
-    type: OpenAPI
-  - url: collections/launch27.postman_collection.json
-    type: Postman
-  - url: collections/launch27.opencollection.json
-    type: OpenCollection
-  description: Authenticate a Launch27 customer or staff user and return a JWT
-    (bearer token) used for subsequent authenticated requests. Legacy email:token
-    header authentication was retired March 1, 2023 in favor of JWT.
-- aid: launch27:launch27-account-settings-api
-  name: Launch27 Account Settings API
   tags:
   - Account
-  - Settings
-  - Configuration
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Get_settings
-  baseURL: https://{tenant}.launch27.com/v1
   properties:
-  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_settings
-    type: APIReference
-  - url: openapi/launch27-openapi.yml
-    type: OpenAPI
-  - url: asyncapi/launch27-asyncapi.yml
-    type: AsyncAPI
-  - url: collections/launch27.postman_collection.json
-    type: Postman
-  description: Read a client account's configuration - branding, currency, country
-    and states, enabled feature flags (multi-location, gift cards, tips, sales tax,
-    SMS reminders, mobile app, etc.), locale/date preferences, accepted payment
-    methods, and the default location. Some fields (Stripe public key, team
-    permissions, alerts, admin id, and a wss:// pubsub notification URL) are only
-    present for authenticated staff/team requests.
+  - type: OpenAPI
+    url: openapi/launch27-account-api-openapi.yml
+  - type: Documentation
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Home
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/General_notes
+  - type: Postman
+    url: collections/launch27.postman_collection.json
+  - type: OpenCollection
+    url: collections/launch27.opencollection.json
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_settings
+  - type: AsyncAPI
+    url: asyncapi/launch27-asyncapi.yml
+  - type: Documentation
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_form_setup
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Price_estimation_for_booking
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/New_booking_policy
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_cancellation_policy
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_as_non-logged-in
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_bookings_for_customer
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_for_customer
+- aid: launch27:launch27-authentication-api
+  name: Launch27 Authentication API
+  description: Login and JWT bearer token issuance.
+  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Login
+  baseURL: https://{tenant}.launch27.com/v1
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/launch27-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Home
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/General_notes
+  - type: Postman
+    url: collections/launch27.postman_collection.json
+  - type: OpenCollection
+    url: collections/launch27.opencollection.json
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_settings
+  - type: AsyncAPI
+    url: asyncapi/launch27-asyncapi.yml
+  - type: Documentation
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_form_setup
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Price_estimation_for_booking
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/New_booking_policy
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_cancellation_policy
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_as_non-logged-in
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_bookings_for_customer
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_for_customer
 - aid: launch27:launch27-booking-helpers-api
   name: Launch27 Booking Helpers API
-  tags:
-  - Bookings
-  - Services
-  - Spots
-  - Frequencies
-  - Pricing
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Services_for_booking
+  description: Supporting data for building and pricing a booking form.
+  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Login
   baseURL: https://{tenant}.launch27.com/v1
-  properties:
-  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_form_setup
-    type: Documentation
-  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Price_estimation_for_booking
-    type: APIReference
-  - url: openapi/launch27-openapi.yml
-    type: OpenAPI
-  - url: collections/launch27.postman_collection.json
-    type: Postman
-  - url: collections/launch27.opencollection.json
-    type: OpenCollection
-  description: Supporting data needed to build and price a booking form - the
-    booking form's field/heading/appearance setup, configured services/extras/
-    pricing parameters, available date/time spots (grid or list, for new bookings
-    or reschedules), location resolution by address, recurring frequencies (with
-    discounts), custom fields, next recurring service date for a frequency, and
-    detailed price/discount/tax estimation.
-- aid: launch27:launch27-booking-policies-api
-  name: Launch27 Booking Policies API
   tags:
-  - Policy
-  - Cancellation
-  - Reschedule
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/New_booking_policy
-  baseURL: https://{tenant}.launch27.com/v1
+  - Booking Helpers
   properties:
-  - url: https://bitbucket.org/awoo23/api-2.0/wiki/New_booking_policy
-    type: APIReference
-  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_cancellation_policy
-    type: APIReference
-  - url: openapi/launch27-openapi.yml
-    type: OpenAPI
-  description: Read the account's new-booking lead-time policy, reschedule
-    lead-time policy, late-cancellation fee/percentage and reason-required
-    policy, and multi-location "prevent booking if no matching location" policy.
-    These policies are also enforced (not just described) by the Booking Helpers
-    API's spots endpoint.
-- aid: launch27:launch27-guest-booking-api
-  name: Launch27 Guest Booking API
-  tags:
-  - Bookings
-  - Non-Logged-In
-  - Checkout
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_as_non-logged-in
-  baseURL: https://{tenant}.launch27.com/v1
-  properties:
-  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_as_non-logged-in
-    type: APIReference
-  - url: openapi/launch27-openapi.yml
-    type: OpenAPI
-  - url: collections/launch27.postman_collection.json
-    type: Postman
-  description: Create a new booking as a first-time, non-logged-in customer -
-    submits customer details, address, service date/arrival window, selected
-    services/extras/pricing parameters, discount code, tip, custom field answers,
-    and payment method (cash, check, PayPal, or a Stripe.js token) in a single
-    call, used to power embeddable/white-label booking widgets.
+  - type: OpenAPI
+    url: openapi/launch27-booking-helpers-api-openapi.yml
+  - type: Documentation
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Home
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/General_notes
+  - type: Postman
+    url: collections/launch27.postman_collection.json
+  - type: OpenCollection
+    url: collections/launch27.opencollection.json
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_settings
+  - type: AsyncAPI
+    url: asyncapi/launch27-asyncapi.yml
+  - type: Documentation
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_form_setup
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Price_estimation_for_booking
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/New_booking_policy
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_cancellation_policy
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_as_non-logged-in
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_bookings_for_customer
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_for_customer
 - aid: launch27:launch27-customer-bookings-api
   name: Launch27 Customer Bookings API
-  tags:
-  - Bookings
-  - Customers
-  - CRUD
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Get_bookings_for_customer
+  description: Authenticated customer-portal booking CRUD.
+  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Login
   baseURL: https://{tenant}.launch27.com/v1
+  tags:
+  - Customer Bookings
   properties:
-  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_bookings_for_customer
-    type: APIReference
-  - url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_for_customer
-    type: APIReference
-  - url: openapi/launch27-openapi.yml
-    type: OpenAPI
-  - url: collections/launch27.postman_collection.json
-    type: Postman
-  - url: collections/launch27.opencollection.json
-    type: OpenCollection
-  description: Authenticated customer-portal operations on a logged-in customer's
-    own bookings - list (with date range, free-text, completed/feedback filters,
-    paging), count, get a single booking's full detail, create a new booking
-    (including "book this again" from a prior booking), update/reschedule an
-    existing booking, and cancel a booking (handling late-cancellation
-    confirmation and recurring-series options).
+  - type: OpenAPI
+    url: openapi/launch27-customer-bookings-api-openapi.yml
+  - type: Documentation
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Home
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/General_notes
+  - type: Postman
+    url: collections/launch27.postman_collection.json
+  - type: OpenCollection
+    url: collections/launch27.opencollection.json
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_settings
+  - type: AsyncAPI
+    url: asyncapi/launch27-asyncapi.yml
+  - type: Documentation
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_form_setup
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Price_estimation_for_booking
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/New_booking_policy
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_cancellation_policy
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_as_non-logged-in
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_bookings_for_customer
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_for_customer
+- aid: launch27:launch27-guest-booking-api
+  name: Launch27 Guest Booking API
+  description: Booking creation for non-logged-in customers.
+  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Login
+  baseURL: https://{tenant}.launch27.com/v1
+  tags:
+  - Guest Booking
+  properties:
+  - type: OpenAPI
+    url: openapi/launch27-guest-booking-api-openapi.yml
+  - type: Documentation
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Home
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/General_notes
+  - type: Postman
+    url: collections/launch27.postman_collection.json
+  - type: OpenCollection
+    url: collections/launch27.opencollection.json
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_settings
+  - type: AsyncAPI
+    url: asyncapi/launch27-asyncapi.yml
+  - type: Documentation
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_form_setup
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Price_estimation_for_booking
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/New_booking_policy
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_cancellation_policy
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_as_non-logged-in
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_bookings_for_customer
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_for_customer
+- aid: launch27:launch27-policy-api
+  name: Launch27 Policy API
+  description: Booking, reschedule, cancellation, and location policies.
+  humanURL: https://bitbucket.org/awoo23/api-2.0/wiki/Login
+  baseURL: https://{tenant}.launch27.com/v1
+  tags:
+  - Policy
+  properties:
+  - type: OpenAPI
+    url: openapi/launch27-policy-api-openapi.yml
+  - type: Documentation
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Home
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/General_notes
+  - type: Postman
+    url: collections/launch27.postman_collection.json
+  - type: OpenCollection
+    url: collections/launch27.opencollection.json
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_settings
+  - type: AsyncAPI
+    url: asyncapi/launch27-asyncapi.yml
+  - type: Documentation
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_form_setup
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Price_estimation_for_booking
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/New_booking_policy
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Booking_cancellation_policy
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_as_non-logged-in
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Get_bookings_for_customer
+  - type: APIReference
+    url: https://bitbucket.org/awoo23/api-2.0/wiki/Create_booking_for_customer
 common:
 - type: AgenticAccess
   url: agentic-access/launch27-agentic-access.yml
