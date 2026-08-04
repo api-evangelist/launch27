@@ -1,0 +1,24 @@
+{
+  "provider": "launch27",
+  "sources": [
+    "launch27-account-api-openapi.yml",
+    "launch27-authentication-api-openapi.yml",
+    "launch27-booking-helpers-api-openapi.yml",
+    "launch27-customer-bookings-api-openapi.yml",
+    "launch27-guest-booking-api-openapi.yml",
+    "launch27-policy-api-openapi.yml"
+  ],
+  "outputs": [
+    "launch27-account-api-openapi.yml",
+    "launch27-authentication-api-openapi.yml",
+    "launch27-booking-helpers-api-openapi.yml",
+    "launch27-customer-bookings-api-openapi.yml",
+    "launch27-guest-booking-api-openapi.yml",
+    "launch27-policy-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
