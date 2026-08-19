@@ -1,0 +1,150 @@
+{
+  "item": [
+    {
+      "id": "76329872-1367-48f0-bcbd-96ed0707fe17",
+      "name": "Account",
+      "description": {
+        "content": "Account/tenant settings and configuration.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5a21b797-3dee-463e-997b-fcb526450b5d",
+          "name": "Get account settings",
+          "request": {
+            "name": "Get account settings",
+            "description": {
+              "content": "Returns account configuration. Response content varies by authentication state, user type, and feature availability - some fields (stripe_public_key, team_permissions, alerts, admin_id, pubsub_url, quickbooks_authorized) require authentication and/or a staff/team user type.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5c5c2676-7299-4f8f-b2b2-ad8cafd98d87",
+              "name": "Account settings.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"logo\": \"http://TpcviBxlOvicZQXH.xetkk6j05qq7mJgr7fJBTnhTm8wI2MjszglMdOM6erT4PpalMgwU7uNr\",\n  \"color\": \"string\",\n  \"name\": \"string\",\n  \"status\": \"trial\",\n  \"sandbox\": true,\n  \"setup_complete\": false,\n  \"timezone\": \"string\",\n  \"currency\": {\n    \"code\": \"string\",\n    \"symbol\": \"string\"\n  },\n  \"country\": {\n    \"key_0\": 3592,\n    \"key_1\": \"string\"\n  },\n  \"features\": {\n    \"key_0\": \"string\"\n  },\n  \"payment_methods\": {\n    \"key_0\": 5435\n  },\n  \"default_location\": {\n    \"id\": 7390,\n    \"name\": \"string\"\n  },\n  \"pubsub_url\": \"string\",\n  \"key_0\": 7949.642878370474,\n  \"key_1\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Launch27 client account subdomain.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "acme",
+      "key": "tenant"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant}}.launch27.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fd3cf362-3009-4f47-8d6b-60b2c60501e7",
+    "name": "Launch27 Account API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unofficial-but-real, actively used REST API for Launch27, a booking and scheduling platform for cleaning service businesses. Documented in a public Bitbucket wiki (https://bitbucket.org/awoo23/api-2.0/wiki/Home) linked from the launch27.com site footer, rather than in Launch27's first-party docs.launch27.com knowledge base. The API is multi-tenant: every client account has its own subdomain. This document models the current v2.1 surface (the deprecated v2.0 surface is not modeled). Not every endpoint mentioned in the wiki is represented here in full schema detail; refer to the wiki pages linked per operation for complete field-by-field documentation.\n\nContact Support:\n Name: API Evangelist\n Email: kin@apievangelist.com",
+      "type": "text/plain"
+    }
+  }
+}

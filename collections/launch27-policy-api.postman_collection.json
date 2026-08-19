@@ -1,0 +1,430 @@
+{
+  "item": [
+    {
+      "id": "439c4412-302c-4283-90c8-42909190d23b",
+      "name": "Policy",
+      "description": {
+        "content": "Booking, reschedule, cancellation, and location policies.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "52180d7f-bb1f-4826-b7a7-183dfc38b667",
+          "name": "Get new booking policy",
+          "request": {
+            "name": "Get new booking policy",
+            "description": {},
+            "url": {
+              "path": [
+                "policy",
+                "booking"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b8feaaf9-5644-4ff6-a79f-6f22f3f89711",
+              "name": "New booking lead-time policy.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policy",
+                    "booking"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"custom\": true,\n  \"unit\": \"day\",\n  \"quantity\": 355\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b6f91f7a-734f-4efe-b594-753e28a45553",
+          "name": "Get booking reschedule policy",
+          "request": {
+            "name": "Get booking reschedule policy",
+            "description": {},
+            "url": {
+              "path": [
+                "policy",
+                "reschedule"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "07656702-f1c2-43bc-8ed6-bc33e601f068",
+              "name": "Reschedule lead-time policy.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policy",
+                    "reschedule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"custom\": true,\n  \"unit\": \"day\",\n  \"quantity\": 355\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d730bc04-367f-4090-abb8-178a30fdbab8",
+          "name": "Get booking cancellation policy",
+          "request": {
+            "name": "Get booking cancellation policy",
+            "description": {},
+            "url": {
+              "path": [
+                "policy",
+                "cancellation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c88c8b8b-b859-4c03-99c3-e00bf14621f5",
+              "name": "Cancellation fee/percent and reason-required policy.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policy",
+                    "cancellation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"custom\": true,\n  \"unit\": \"day\",\n  \"quantity\": 8183,\n  \"late_cancellation_fee\": 3340.246318979585,\n  \"late_cancellation_percent\": 4119.23443087164,\n  \"cancellation_reason_on\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec3352bd-a5ea-4c26-a1d5-a69e72ab889c",
+          "name": "Get \"prevent booking if location not found\" policy",
+          "request": {
+            "name": "Get \"prevent booking if location not found\" policy",
+            "description": {},
+            "url": {
+              "path": [
+                "policy",
+                "location"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "17cb5c1a-53e5-4a4a-8865-5942b9cd0c00",
+              "name": "Location policy.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policy",
+                    "location"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"prevent_booking\": false,\n  \"prevent_booking_text\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Launch27 client account subdomain.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "acme",
+      "key": "tenant"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant}}.launch27.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3f343af7-55e9-407e-bd66-3069bd00e59b",
+    "name": "Launch27 Account Policy API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unofficial-but-real, actively used REST API for Launch27, a booking and scheduling platform for cleaning service businesses. Documented in a public Bitbucket wiki (https://bitbucket.org/awoo23/api-2.0/wiki/Home) linked from the launch27.com site footer, rather than in Launch27's first-party docs.launch27.com knowledge base. The API is multi-tenant: every client account has its own subdomain. This document models the current v2.1 surface (the deprecated v2.0 surface is not modeled). Not every endpoint mentioned in the wiki is represented here in full schema detail; refer to the wiki pages linked per operation for complete field-by-field documentation.\n\nContact Support:\n Name: API Evangelist\n Email: kin@apievangelist.com",
+      "type": "text/plain"
+    }
+  }
+}

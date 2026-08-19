@@ -1,0 +1,329 @@
+{
+  "item": [
+    {
+      "id": "a1b6a382-7245-4cd4-a4aa-22162c76b4bc",
+      "name": "Authentication",
+      "description": {
+        "content": "Login and JWT bearer token issuance.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b4245276-2f27-478e-a1cb-25e273e823ab",
+          "name": "Authenticate and obtain a JWT bearer token",
+          "request": {
+            "name": "Authenticate and obtain a JWT bearer token",
+            "description": {
+              "content": "Authenticates a customer or staff user. Returns 401 on failure, 403 if the account is locked (5 invalid attempts within 1 minute locks the account for 5 minutes) or a 2FA token is required, 422 on schema errors.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8c66b7a2-6d50-40ed-8204-c83520147643",
+              "name": "Authenticated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4036,\n  \"email\": \"string\",\n  \"type\": \"Tenant::Customer\",\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"bearer\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db65f7d1-49bf-4f82-853e-3b55c5eeb33b",
+              "name": "Missing/invalid Authorization header, or invalid credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7fb66977-e103-41b8-92db-77cf8e6e40f1",
+              "name": "Account locked out, or OTP token required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5cccb51f-ca3a-4356-94bd-fa06e831dec7",
+              "name": "JSON schema or data validation error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": true,\n  \"key_1\": 4517.314017018966\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Launch27 client account subdomain.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "acme",
+      "key": "tenant"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant}}.launch27.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2dec5c38-5e29-40aa-ba9e-8beae9b4f264",
+    "name": "Launch27 Account Authentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unofficial-but-real, actively used REST API for Launch27, a booking and scheduling platform for cleaning service businesses. Documented in a public Bitbucket wiki (https://bitbucket.org/awoo23/api-2.0/wiki/Home) linked from the launch27.com site footer, rather than in Launch27's first-party docs.launch27.com knowledge base. The API is multi-tenant: every client account has its own subdomain. This document models the current v2.1 surface (the deprecated v2.0 surface is not modeled). Not every endpoint mentioned in the wiki is represented here in full schema detail; refer to the wiki pages linked per operation for complete field-by-field documentation.\n\nContact Support:\n Name: API Evangelist\n Email: kin@apievangelist.com",
+      "type": "text/plain"
+    }
+  }
+}

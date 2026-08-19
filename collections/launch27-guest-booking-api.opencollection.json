@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Launch27 Account Guest Booking API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Guest Booking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new booking as a non-logged-in customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.launch27.com/v1/booking",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new booking as a non-logged-in customer"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

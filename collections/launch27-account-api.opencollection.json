@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Launch27 Account API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get account settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.launch27.com/v1/settings",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns account configuration. Response content varies by authentication state, user type, and feature availability - some fields (stripe_public_key, team_permissions, alerts, admin_id, pubsub_url, quickbooks_authorized) require authentication and/or a staff/team user type."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

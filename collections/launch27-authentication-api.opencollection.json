@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Launch27 Account Authentication API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate and obtain a JWT bearer token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.launch27.com/v1/login",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticates a customer or staff user. Returns 401 on failure, 403 if the account is locked (5 invalid attempts within 1 minute locks the account for 5 minutes) or a 2FA token is required, 422 on schema errors."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

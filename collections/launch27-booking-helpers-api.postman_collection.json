@@ -1,0 +1,1162 @@
+{
+  "item": [
+    {
+      "id": "f28da0fb-1618-4c0f-844b-44105ca241ac",
+      "name": "Booking Helpers",
+      "description": {
+        "content": "Supporting data for building and pricing a booking form.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b87234d7-9632-46d1-9fab-368a47d15bd0",
+          "name": "Get booking form setup",
+          "request": {
+            "name": "Get booking form setup",
+            "description": {},
+            "url": {
+              "path": [
+                "booking",
+                "form"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Booking form type (requires features.new_booking_form_widget)."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f3b02ee5-3cec-4091-a1af-358a8df2503c",
+              "name": "Booking form headings, system fields, paragraphs, and appearance settings.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "booking",
+                    "form"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eec034b5-5c84-46b0-a9da-eb8cd0e49a1c",
+          "name": "Get services available for booking",
+          "request": {
+            "name": "Get services available for booking",
+            "description": {},
+            "url": {
+              "path": [
+                "booking",
+                "services"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "booking_uuid",
+                  "value": "<string>",
+                  "description": "Booking digest; required (and requires auth) when requesting for an existing booking."
+                },
+                {
+                  "disabled": false,
+                  "key": "location_id",
+                  "value": "<integer>",
+                  "description": "Unique ID of location; default location used if omitted."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0a313be6-4cf1-43ff-a4b9-5fde6abf05d3",
+              "name": "List of available services.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "booking",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "booking_uuid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "location_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 8050,\n    \"name\": \"string\",\n    \"price\": 1656.7758478485416,\n    \"commercial\": true,\n    \"discount_by_frequency\": true,\n    \"discount_by_code\": false,\n    \"hourly\": {\n      \"key_0\": 4679.397105308169,\n      \"key_1\": \"string\"\n    },\n    \"extras\": [\n      {\n        \"id\": 2728,\n        \"name\": \"string\",\n        \"price\": 2743.771400457855,\n        \"quantity_based\": true,\n        \"recurring\": true,\n        \"discount_by_frequency\": true,\n        \"discount_by_code\": true\n      },\n      {\n        \"id\": 5690,\n        \"name\": \"string\",\n        \"price\": 5245.398203557472,\n        \"quantity_based\": false,\n        \"recurring\": false,\n        \"discount_by_frequency\": false,\n        \"discount_by_code\": true\n      }\n    ],\n    \"pricing_parameters\": [\n      {\n        \"id\": 9847,\n        \"name\": \"string\",\n        \"price\": 2466.185606777578,\n        \"quantity_minimum\": 904,\n        \"quantity_maximum\": 9718\n      },\n      {\n        \"id\": 1853,\n        \"name\": \"string\",\n        \"price\": 1838.9452347533274,\n        \"quantity_minimum\": 6648,\n        \"quantity_maximum\": 6414\n      }\n    ]\n  },\n  {\n    \"id\": 3259,\n    \"name\": \"string\",\n    \"price\": 3063.5232111554146,\n    \"commercial\": true,\n    \"discount_by_frequency\": false,\n    \"discount_by_code\": true,\n    \"hourly\": {\n      \"key_0\": 1509.00384253133,\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"extras\": [\n      {\n        \"id\": 8420,\n        \"name\": \"string\",\n        \"price\": 525.4337228212436,\n        \"quantity_based\": true,\n        \"recurring\": false,\n        \"discount_by_frequency\": false,\n        \"discount_by_code\": false\n      },\n      {\n        \"id\": 9701,\n        \"name\": \"string\",\n        \"price\": 160.06315513847903,\n        \"quantity_based\": false,\n        \"recurring\": true,\n        \"discount_by_frequency\": false,\n        \"discount_by_code\": false\n      }\n    ],\n    \"pricing_parameters\": [\n      {\n        \"id\": 6545,\n        \"name\": \"string\",\n        \"price\": 9289.963597162237,\n        \"quantity_minimum\": 1721,\n        \"quantity_maximum\": 9073\n      },\n      {\n        \"id\": 2039,\n        \"name\": \"string\",\n        \"price\": 8418.993694025075,\n        \"quantity_minimum\": 7089,\n        \"quantity_maximum\": 7612\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0712b2fc-a049-4b18-8ad6-c1cc67ed22d9",
+          "name": "Get available spots for booking",
+          "request": {
+            "name": "Get available spots for booking",
+            "description": {},
+            "url": {
+              "path": [
+                "booking",
+                "spots"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"<date>\",\n  \"days\": \"<integer>\",\n  \"mode\": \"<string>\",\n  \"location_id\": \"<integer>\",\n  \"grid\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aec66326-c829-42de-a167-7349b9038048",
+              "name": "Available spots by date (or grid + days if grid=true).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "booking",
+                    "spots"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"<date>\",\n  \"days\": \"<integer>\",\n  \"mode\": \"<string>\",\n  \"location_id\": \"<integer>\",\n  \"grid\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e8b63d2d-69b6-49b1-b766-9e0d018a8136",
+          "name": "Resolve location for a booking address",
+          "request": {
+            "name": "Resolve location for a booking address",
+            "description": {},
+            "url": {
+              "path": [
+                "booking",
+                "location"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"state\": \"<string>\",\n  \"zip\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "88132c6c-50c0-471c-98d2-aecf83548f7d",
+              "name": "Resolved location.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "booking",
+                    "location"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"state\": \"<string>\",\n  \"zip\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2347,\n  \"name\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c1382333-c725-4a70-bb77-c93762bafc9f",
+          "name": "Get frequencies available for booking",
+          "request": {
+            "name": "Get frequencies available for booking",
+            "description": {},
+            "url": {
+              "path": [
+                "booking",
+                "frequencies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "booking_uuid",
+                  "value": "<string>",
+                  "description": "Booking digest; required (and requires auth) when requesting for an existing booking."
+                },
+                {
+                  "disabled": false,
+                  "key": "location_id",
+                  "value": "<integer>",
+                  "description": "Unique ID of location; default location used if omitted."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fea30fcb-e408-4c82-a5b1-aeae61fde66d",
+              "name": "List of configured frequencies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "booking",
+                    "frequencies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "booking_uuid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "location_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 2882,\n    \"interval\": \"string\",\n    \"name\": \"string\",\n    \"percent\": 9125.572783920925,\n    \"amount\": 5996.179439116542,\n    \"exclude_first\": true,\n    \"default\": false\n  },\n  {\n    \"id\": 3698,\n    \"interval\": \"string\",\n    \"name\": \"string\",\n    \"percent\": 4753.391255102446,\n    \"amount\": 7827.323155529762,\n    \"exclude_first\": false,\n    \"default\": true\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7c08ee3-c7b5-4d20-9568-c0a375107329",
+          "name": "Get next recurring booking date for a frequency",
+          "request": {
+            "name": "Get next recurring booking date for a frequency",
+            "description": {},
+            "url": {
+              "path": [
+                "booking",
+                "frequencies",
+                ":id",
+                "next"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Frequency unique ID."
+                },
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6945263e-142b-47d7-9afb-7244a8e87e50",
+              "name": "Next recurring date.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "booking",
+                    "frequencies",
+                    ":id",
+                    "next"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Frequency unique ID."
+                    },
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"date\": \"1968-09-10T07:03:27.388Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82b3d926-bbd4-4c4c-8513-0fb8013785f7",
+              "name": "Schema error, or frequency is not recurring.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "booking",
+                    "frequencies",
+                    ":id",
+                    "next"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Frequency unique ID."
+                    },
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0cf4b44b-a2dd-4e14-a270-baf1363c1e94",
+          "name": "Get custom fields for booking",
+          "request": {
+            "name": "Get custom fields for booking",
+            "description": {},
+            "url": {
+              "path": [
+                "booking",
+                "custom_fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "booking_uuid",
+                  "value": "<string>",
+                  "description": "Booking digest; required (and requires auth) when requesting for an existing booking."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e6328135-5e30-459b-b5a6-d86fa85077ad",
+              "name": "List of custom fields.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "booking",
+                    "custom_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "booking_uuid",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 4677,\n    \"code\": \"string\",\n    \"label\": \"string\",\n    \"control_type\": \"date\",\n    \"value_required\": true,\n    \"visible\": true,\n    \"ordering\": 5532,\n    \"default_value\": \"string\",\n    \"options\": [\n      {\n        \"key_0\": true,\n        \"key_1\": \"string\"\n      },\n      {\n        \"key_0\": 4582.8957886424805\n      }\n    ]\n  },\n  {\n    \"id\": 4702,\n    \"code\": \"string\",\n    \"label\": \"string\",\n    \"control_type\": \"single_line\",\n    \"value_required\": false,\n    \"visible\": false,\n    \"ordering\": 6601,\n    \"default_value\": \"string\",\n    \"options\": [\n      {\n        \"key_0\": 248.05399059667278\n      },\n      {\n        \"key_0\": true,\n        \"key_1\": \"string\",\n        \"key_2\": true\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "814de963-b407-4844-a51c-a654e5a3bc7d",
+          "name": "Estimate price for a booking",
+          "request": {
+            "name": "Estimate price for a booking",
+            "description": {},
+            "url": {
+              "path": [
+                "booking",
+                "estimate_price"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Launch27 client account subdomain.",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"service_date\": \"<string>\",\n  \"frequency_id\": \"<integer>\",\n  \"services\": [\n    {\n      \"id\": \"<integer>\",\n      \"hourly\": {\n        \"quantity\": \"<integer>\",\n        \"minutes\": \"<integer>\"\n      },\n      \"extras\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        }\n      ],\n      \"pricing_parameters\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"hourly\": {\n        \"quantity\": \"<integer>\",\n        \"minutes\": \"<integer>\"\n      },\n      \"extras\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        }\n      ],\n      \"pricing_parameters\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        }\n      ]\n    }\n  ],\n  \"email\": \"<email>\",\n  \"booking_uuid\": \"<string>\",\n  \"original_booking_id\": \"<integer>\",\n  \"location_id\": \"<integer>\",\n  \"discount_code\": \"<string>\",\n  \"tip\": \"<number>\",\n  \"tip_recurring\": \"<boolean>\",\n  \"price_adjustment\": \"<number>\",\n  \"final_price\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "88f9ac9a-5cf3-42ad-8d67-2844c05a355d",
+              "name": "Price estimate.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "booking",
+                    "estimate_price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"service_date\": \"<string>\",\n  \"frequency_id\": \"<integer>\",\n  \"services\": [\n    {\n      \"id\": \"<integer>\",\n      \"hourly\": {\n        \"quantity\": \"<integer>\",\n        \"minutes\": \"<integer>\"\n      },\n      \"extras\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        }\n      ],\n      \"pricing_parameters\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"hourly\": {\n        \"quantity\": \"<integer>\",\n        \"minutes\": \"<integer>\"\n      },\n      \"extras\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        }\n      ],\n      \"pricing_parameters\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        }\n      ]\n    }\n  ],\n  \"email\": \"<email>\",\n  \"booking_uuid\": \"<string>\",\n  \"original_booking_id\": \"<integer>\",\n  \"location_id\": \"<integer>\",\n  \"discount_code\": \"<string>\",\n  \"tip\": \"<number>\",\n  \"tip_recurring\": \"<boolean>\",\n  \"price_adjustment\": \"<number>\",\n  \"final_price\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"services\": 7731.283754113955,\n  \"extras\": 1501.9702134459178,\n  \"discount_amount\": 3089.558535119129,\n  \"discount_message\": \"string\",\n  \"giftcard_amount\": 7474.353279662719,\n  \"price_adjustment\": 4522.5353735028875,\n  \"tax\": {\n    \"key_0\": \"string\"\n  },\n  \"tip\": 3667.8105432707953,\n  \"total\": 2328.500759492035,\n  \"next_total\": 8373.030224059532,\n  \"duration\": 8914,\n  \"price_for_frequency\": 6775.827585707114,\n  \"price_for_discount_by_code\": 1781.7560991361115,\n  \"price_recurring_for_frequency\": 6526.0014164283375\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01c3dd8b-34d0-4697-967f-ba5df4c37969",
+              "name": "Missing/invalid Authorization header, or invalid credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "booking",
+                    "estimate_price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"service_date\": \"<string>\",\n  \"frequency_id\": \"<integer>\",\n  \"services\": [\n    {\n      \"id\": \"<integer>\",\n      \"hourly\": {\n        \"quantity\": \"<integer>\",\n        \"minutes\": \"<integer>\"\n      },\n      \"extras\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        }\n      ],\n      \"pricing_parameters\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"hourly\": {\n        \"quantity\": \"<integer>\",\n        \"minutes\": \"<integer>\"\n      },\n      \"extras\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        }\n      ],\n      \"pricing_parameters\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        }\n      ]\n    }\n  ],\n  \"email\": \"<email>\",\n  \"booking_uuid\": \"<string>\",\n  \"original_booking_id\": \"<integer>\",\n  \"location_id\": \"<integer>\",\n  \"discount_code\": \"<string>\",\n  \"tip\": \"<number>\",\n  \"tip_recurring\": \"<boolean>\",\n  \"price_adjustment\": \"<number>\",\n  \"final_price\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6413873d-11a5-4efb-aafc-6ccd3c5b4038",
+              "name": "Customer has no access to booking.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "booking",
+                    "estimate_price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Launch27 client account subdomain.",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"service_date\": \"<string>\",\n  \"frequency_id\": \"<integer>\",\n  \"services\": [\n    {\n      \"id\": \"<integer>\",\n      \"hourly\": {\n        \"quantity\": \"<integer>\",\n        \"minutes\": \"<integer>\"\n      },\n      \"extras\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        }\n      ],\n      \"pricing_parameters\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"hourly\": {\n        \"quantity\": \"<integer>\",\n        \"minutes\": \"<integer>\"\n      },\n      \"extras\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\",\n          \"recurring\": \"<boolean>\"\n        }\n      ],\n      \"pricing_parameters\": [\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"quantity\": \"<integer>\"\n        }\n      ]\n    }\n  ],\n  \"email\": \"<email>\",\n  \"booking_uuid\": \"<string>\",\n  \"original_booking_id\": \"<integer>\",\n  \"location_id\": \"<integer>\",\n  \"discount_code\": \"<string>\",\n  \"tip\": \"<number>\",\n  \"tip_recurring\": \"<boolean>\",\n  \"price_adjustment\": \"<number>\",\n  \"final_price\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Launch27 client account subdomain.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "acme",
+      "key": "tenant"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant}}.launch27.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "66a8de7d-73e2-4c6d-a83b-e803fc1e01cb",
+    "name": "Launch27 Account Booking Helpers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unofficial-but-real, actively used REST API for Launch27, a booking and scheduling platform for cleaning service businesses. Documented in a public Bitbucket wiki (https://bitbucket.org/awoo23/api-2.0/wiki/Home) linked from the launch27.com site footer, rather than in Launch27's first-party docs.launch27.com knowledge base. The API is multi-tenant: every client account has its own subdomain. This document models the current v2.1 surface (the deprecated v2.0 surface is not modeled). Not every endpoint mentioned in the wiki is represented here in full schema detail; refer to the wiki pages linked per operation for complete field-by-field documentation.\n\nContact Support:\n Name: API Evangelist\n Email: kin@apievangelist.com",
+      "type": "text/plain"
+    }
+  }
+}

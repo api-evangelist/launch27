@@ -1,0 +1,200 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Launch27 Account Booking Helpers API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Booking Helpers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get booking form setup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.launch27.com/v1/booking/form",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Booking form type (requires features.new_booking_form_widget)."
+              }
+            ]
+          },
+          "docs": "Get booking form setup"
+        },
+        {
+          "info": {
+            "name": "Get services available for booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.launch27.com/v1/booking/services",
+            "params": [
+              {
+                "name": "booking_uuid",
+                "value": "",
+                "type": "query",
+                "description": "Booking digest; required (and requires auth) when requesting for an existing booking."
+              },
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "query",
+                "description": "Unique ID of location; default location used if omitted."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get services available for booking"
+        },
+        {
+          "info": {
+            "name": "Get available spots for booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.launch27.com/v1/booking/spots",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get available spots for booking"
+        },
+        {
+          "info": {
+            "name": "Resolve location for a booking address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.launch27.com/v1/booking/location",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resolve location for a booking address"
+        },
+        {
+          "info": {
+            "name": "Get frequencies available for booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.launch27.com/v1/booking/frequencies",
+            "params": [
+              {
+                "name": "booking_uuid",
+                "value": "",
+                "type": "query",
+                "description": "Booking digest; required (and requires auth) when requesting for an existing booking."
+              },
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "query",
+                "description": "Unique ID of location; default location used if omitted."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get frequencies available for booking"
+        },
+        {
+          "info": {
+            "name": "Get next recurring booking date for a frequency",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.launch27.com/v1/booking/frequencies/:id/next",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Frequency unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get next recurring booking date for a frequency"
+        },
+        {
+          "info": {
+            "name": "Get custom fields for booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.launch27.com/v1/booking/custom_fields",
+            "params": [
+              {
+                "name": "booking_uuid",
+                "value": "",
+                "type": "query",
+                "description": "Booking digest; required (and requires auth) when requesting for an existing booking."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get custom fields for booking"
+        },
+        {
+          "info": {
+            "name": "Estimate price for a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.launch27.com/v1/booking/estimate_price",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Estimate price for a booking"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

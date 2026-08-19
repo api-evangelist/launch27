@@ -1,0 +1,76 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Launch27 Account Policy API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Policy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get new booking policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.launch27.com/v1/policy/booking"
+          },
+          "docs": "Get new booking policy"
+        },
+        {
+          "info": {
+            "name": "Get booking reschedule policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.launch27.com/v1/policy/reschedule",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get booking reschedule policy"
+        },
+        {
+          "info": {
+            "name": "Get booking cancellation policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.launch27.com/v1/policy/cancellation",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get booking cancellation policy"
+        },
+        {
+          "info": {
+            "name": "Get \"prevent booking if location not found\" policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.launch27.com/v1/policy/location"
+          },
+          "docs": "Get \"prevent booking if location not found\" policy"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

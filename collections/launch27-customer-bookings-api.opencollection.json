@@ -1,0 +1,165 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Launch27 Account Customer Bookings API",
+    "version": "2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Customer Bookings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List active bookings for the logged-in customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.launch27.com/v1/customer/bookings",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search across address, city, phone."
+              },
+              {
+                "name": "options",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated; completed, not_completed, with_feedback, without_feedback."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List active bookings for the logged-in customer"
+        },
+        {
+          "info": {
+            "name": "Create a new booking as the logged-in customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.launch27.com/v1/customer/bookings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new booking as the logged-in customer"
+        },
+        {
+          "info": {
+            "name": "Count active bookings for the logged-in customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.launch27.com/v1/customer/bookings/count"
+          },
+          "docs": "Count active bookings for the logged-in customer"
+        },
+        {
+          "info": {
+            "name": "Get a single booking's details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.launch27.com/v1/customer/bookings/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Booking unique ID."
+              }
+            ]
+          },
+          "docs": "Get a single booking's details"
+        },
+        {
+          "info": {
+            "name": "Update or reschedule an existing booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{tenant}.launch27.com/v1/customer/bookings/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Booking unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update or reschedule an existing booking"
+        },
+        {
+          "info": {
+            "name": "Cancel an existing booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.launch27.com/v1/customer/bookings/:id/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Booking unique ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel an existing booking"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
