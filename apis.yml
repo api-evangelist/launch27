@@ -19,6 +19,18 @@ description: Launch27 is a booking and scheduling platform for cleaning service
   and covers booking creation/management for non-logged-in and logged-in
   customers, booking-form helper data (services, spots, frequencies, custom
   fields, price estimation), booking policies, and account settings.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
