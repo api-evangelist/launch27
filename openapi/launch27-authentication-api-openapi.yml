@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Launch27 Account Authentication API
-  description: 'Unofficial-but-real, actively used REST API for Launch27, a booking and scheduling platform for cleaning service businesses. Documented in a public Bitbucket wiki (https://bitbucket.org/awoo23/api-2.0/wiki/Home) linked from the launch27.com site footer, rather than in Launch27''s first-party docs.launch27.com knowledge base. The API is multi-tenant: every client account has its own subdomain. This document models the current v2.1 surface (the deprecated v2.0 surface is not modeled). Not every endpoint mentioned in the wiki is represented here in full schema detail; refer to the wiki pages linked per operation for complete field-by-field documentation.'
+  title: Launch27 Authentication API
+  description: Unofficial-but-real, actively used REST API for Launch27, a booking and scheduling platform for cleaning service businesses.
   version: '2.1'
   contact:
     name: API Evangelist
@@ -53,6 +53,16 @@ paths:
         '422':
           $ref: '#/components/responses/ValidationError'
 components:
+  responses:
+    Unauthorized:
+      description: Missing/invalid Authorization header, or invalid credentials.
+    ValidationError:
+      description: JSON schema or data validation error.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
   schemas:
     LoginRequest:
       type: object
@@ -85,16 +95,6 @@ components:
         bearer:
           type: string
           description: JWT bearer token.
-  responses:
-    Unauthorized:
-      description: Missing/invalid Authorization header, or invalid credentials.
-    ValidationError:
-      description: JSON schema or data validation error.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http

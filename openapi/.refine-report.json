@@ -1,12 +1,7 @@
 {
   "provider": "launch27",
   "sources": [
-    "launch27-account-api-openapi.yml",
-    "launch27-authentication-api-openapi.yml",
-    "launch27-booking-helpers-api-openapi.yml",
-    "launch27-customer-bookings-api-openapi.yml",
-    "launch27-guest-booking-api-openapi.yml",
-    "launch27-policy-api-openapi.yml"
+    "_original/launch27-openapi.yml"
   ],
   "outputs": [
     "launch27-account-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "launch27-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "launch27-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "launch27-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "launch27-booking-helpers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "launch27-customer-bookings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "launch27-guest-booking-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "launch27-policy-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

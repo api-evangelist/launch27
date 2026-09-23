@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Launch27 Account Customer Bookings API
-  description: 'Unofficial-but-real, actively used REST API for Launch27, a booking and scheduling platform for cleaning service businesses. Documented in a public Bitbucket wiki (https://bitbucket.org/awoo23/api-2.0/wiki/Home) linked from the launch27.com site footer, rather than in Launch27''s first-party docs.launch27.com knowledge base. The API is multi-tenant: every client account has its own subdomain. This document models the current v2.1 surface (the deprecated v2.0 surface is not modeled). Not every endpoint mentioned in the wiki is represented here in full schema detail; refer to the wiki pages linked per operation for complete field-by-field documentation.'
+  title: Launch27 Customer Bookings API
+  description: Unofficial-but-real, actively used REST API for Launch27, a booking and scheduling platform for cleaning service businesses.
   version: '2.1'
   contact:
     name: API Evangelist
@@ -208,29 +208,36 @@ components:
       - payment_method
       properties:
         location_id:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         original_booking_id:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: '"Book This Again" reference to a prior booking owned by the customer.'
         address:
           type: string
         city:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         state:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         zip:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         phone:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         sms_notifications:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         frequency_id:
           type: integer
         service_date:
@@ -243,14 +250,17 @@ components:
           items:
             $ref: '#/components/schemas/ServiceSelection'
         discount_code:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         tip:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         tip_recurring:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         payment_method:
           type: string
           enum:
@@ -259,11 +269,13 @@ components:
           - cash
           - check
         customer_notes:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         custom_fields:
-          type: array
-          nullable: true
+          type:
+          - array
+          - 'null'
           items:
             type: object
             additionalProperties: true
@@ -278,63 +290,40 @@ components:
         ga_item:
           type: object
           additionalProperties: true
-    ServiceSelection:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: integer
-        hourly:
-          type: object
-          nullable: true
-          properties:
-            quantity:
-              type: integer
-            minutes:
-              type: integer
-        extras:
-          type: array
-          nullable: true
-          items:
-            type: object
-            required:
-            - id
-            - quantity
-            properties:
-              id:
-                type: integer
-              quantity:
-                type: integer
-              recurring:
-                type: boolean
-                nullable: true
-        pricing_parameters:
-          type: array
-          nullable: true
-          items:
-            type: object
-            required:
-            - id
-            - quantity
-            properties:
-              id:
-                type: integer
-              quantity:
-                type: integer
     UpdateCustomerBookingRequest:
       allOf:
       - $ref: '#/components/schemas/CustomerBookingRequest'
       - type: object
         properties:
           create_next_recurring:
-            type: object
-            nullable: true
+            type:
+            - object
+            - 'null'
             required:
             - service_date
             properties:
               service_date:
                 type: string
+    CancelBookingRequest:
+      type: object
+      properties:
+        confirmed_late:
+          type: boolean
+        confirmed_fee:
+          type:
+          - number
+          - 'null'
+        confirmed_recurring:
+          type:
+          - object
+          - 'null'
+          properties:
+            cancel_future:
+              type: boolean
+        reason:
+          type:
+          - string
+          - 'null'
     Booking:
       type: object
       description: See https://bitbucket.org/awoo23/api-2.0/wiki/Get_booking_for_customer for full attribute documentation.
@@ -379,23 +368,54 @@ components:
         actions:
           type: object
           additionalProperties: true
-    CancelBookingRequest:
+    ServiceSelection:
       type: object
+      required:
+      - id
       properties:
-        confirmed_late:
-          type: boolean
-        confirmed_fee:
-          type: number
-          nullable: true
-        confirmed_recurring:
-          type: object
-          nullable: true
+        id:
+          type: integer
+        hourly:
+          type:
+          - object
+          - 'null'
           properties:
-            cancel_future:
-              type: boolean
-        reason:
-          type: string
-          nullable: true
+            quantity:
+              type: integer
+            minutes:
+              type: integer
+        extras:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            required:
+            - id
+            - quantity
+            properties:
+              id:
+                type: integer
+              quantity:
+                type: integer
+              recurring:
+                type:
+                - boolean
+                - 'null'
+        pricing_parameters:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            required:
+            - id
+            - quantity
+            properties:
+              id:
+                type: integer
+              quantity:
+                type: integer
   responses:
     Unauthorized:
       description: Missing/invalid Authorization header, or invalid credentials.
