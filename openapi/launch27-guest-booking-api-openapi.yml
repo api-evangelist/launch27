@@ -49,6 +49,54 @@ paths:
           $ref: '#/components/responses/ValidationError'
 components:
   schemas:
+    ServiceSelection:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: integer
+        hourly:
+          type:
+          - object
+          - 'null'
+          properties:
+            quantity:
+              type: integer
+            minutes:
+              type: integer
+        extras:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            required:
+            - id
+            - quantity
+            properties:
+              id:
+                type: integer
+              quantity:
+                type: integer
+              recurring:
+                type:
+                - boolean
+                - 'null'
+        pricing_parameters:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            required:
+            - id
+            - quantity
+            properties:
+              id:
+                type: integer
+              quantity:
+                type: integer
     GuestBookingRequest:
       type: object
       required:
@@ -163,54 +211,6 @@ components:
         ga_item:
           type: object
           additionalProperties: true
-    ServiceSelection:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: integer
-        hourly:
-          type:
-          - object
-          - 'null'
-          properties:
-            quantity:
-              type: integer
-            minutes:
-              type: integer
-        extras:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            required:
-            - id
-            - quantity
-            properties:
-              id:
-                type: integer
-              quantity:
-                type: integer
-              recurring:
-                type:
-                - boolean
-                - 'null'
-        pricing_parameters:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            required:
-            - id
-            - quantity
-            properties:
-              id:
-                type: integer
-              quantity:
-                type: integer
   responses:
     ValidationError:
       description: JSON schema or data validation error.

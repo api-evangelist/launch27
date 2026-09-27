@@ -53,31 +53,7 @@ paths:
         '422':
           $ref: '#/components/responses/ValidationError'
 components:
-  responses:
-    Unauthorized:
-      description: Missing/invalid Authorization header, or invalid credentials.
-    ValidationError:
-      description: JSON schema or data validation error.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
   schemas:
-    LoginRequest:
-      type: object
-      required:
-      - email
-      - password
-      properties:
-        email:
-          type: string
-          format: email
-        password:
-          type: string
-        token:
-          type: string
-          description: 6-digit 2FA token, if enabled.
     LoginResponse:
       type: object
       properties:
@@ -95,6 +71,30 @@ components:
         bearer:
           type: string
           description: JWT bearer token.
+    LoginRequest:
+      type: object
+      required:
+      - email
+      - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        token:
+          type: string
+          description: 6-digit 2FA token, if enabled.
+  responses:
+    Unauthorized:
+      description: Missing/invalid Authorization header, or invalid credentials.
+    ValidationError:
+      description: JSON schema or data validation error.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http

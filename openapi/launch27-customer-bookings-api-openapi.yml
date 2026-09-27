@@ -290,84 +290,6 @@ components:
         ga_item:
           type: object
           additionalProperties: true
-    UpdateCustomerBookingRequest:
-      allOf:
-      - $ref: '#/components/schemas/CustomerBookingRequest'
-      - type: object
-        properties:
-          create_next_recurring:
-            type:
-            - object
-            - 'null'
-            required:
-            - service_date
-            properties:
-              service_date:
-                type: string
-    CancelBookingRequest:
-      type: object
-      properties:
-        confirmed_late:
-          type: boolean
-        confirmed_fee:
-          type:
-          - number
-          - 'null'
-        confirmed_recurring:
-          type:
-          - object
-          - 'null'
-          properties:
-            cancel_future:
-              type: boolean
-        reason:
-          type:
-          - string
-          - 'null'
-    Booking:
-      type: object
-      description: See https://bitbucket.org/awoo23/api-2.0/wiki/Get_booking_for_customer for full attribute documentation.
-      additionalProperties: true
-      properties:
-        id:
-          type: integer
-        digest:
-          type: string
-        service_date:
-          type: string
-          format: date-time
-        arrival_window:
-          type: integer
-        address:
-          type: object
-          additionalProperties: true
-        active:
-          type: boolean
-        completed:
-          type: boolean
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        frequency:
-          type: object
-          additionalProperties: true
-        payment_method_info:
-          type: object
-          additionalProperties: true
-        services:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        summary:
-          type: object
-          additionalProperties: true
-        actions:
-          type: object
-          additionalProperties: true
     ServiceSelection:
       type: object
       required:
@@ -416,9 +338,85 @@ components:
                 type: integer
               quantity:
                 type: integer
+    Booking:
+      type: object
+      description: See https://bitbucket.org/awoo23/api-2.0/wiki/Get_booking_for_customer for full attribute documentation.
+      additionalProperties: true
+      properties:
+        id:
+          type: integer
+        digest:
+          type: string
+        service_date:
+          type: string
+          format: date-time
+        arrival_window:
+          type: integer
+        address:
+          type: object
+          additionalProperties: true
+        active:
+          type: boolean
+        completed:
+          type: boolean
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        frequency:
+          type: object
+          additionalProperties: true
+        payment_method_info:
+          type: object
+          additionalProperties: true
+        services:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        summary:
+          type: object
+          additionalProperties: true
+        actions:
+          type: object
+          additionalProperties: true
+    CancelBookingRequest:
+      type: object
+      properties:
+        confirmed_late:
+          type: boolean
+        confirmed_fee:
+          type:
+          - number
+          - 'null'
+        confirmed_recurring:
+          type:
+          - object
+          - 'null'
+          properties:
+            cancel_future:
+              type: boolean
+        reason:
+          type:
+          - string
+          - 'null'
+    UpdateCustomerBookingRequest:
+      allOf:
+      - $ref: '#/components/schemas/CustomerBookingRequest'
+      - type: object
+        properties:
+          create_next_recurring:
+            type:
+            - object
+            - 'null'
+            required:
+            - service_date
+            properties:
+              service_date:
+                type: string
   responses:
-    Unauthorized:
-      description: Missing/invalid Authorization header, or invalid credentials.
     ValidationError:
       description: JSON schema or data validation error.
       content:
@@ -426,6 +424,8 @@ components:
           schema:
             type: object
             additionalProperties: true
+    Unauthorized:
+      description: Missing/invalid Authorization header, or invalid credentials.
   securitySchemes:
     bearerAuth:
       type: http

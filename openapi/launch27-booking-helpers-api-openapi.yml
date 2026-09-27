@@ -222,57 +222,7 @@ paths:
         '403':
           description: Customer has no access to booking.
 components:
-  parameters:
-    BookingUuid:
-      name: booking_uuid
-      in: query
-      required: false
-      description: Booking digest; required (and requires auth) when requesting for an existing booking.
-      schema:
-        type: string
-    LocationId:
-      name: location_id
-      in: query
-      required: false
-      description: Unique ID of location; default location used if omitted.
-      schema:
-        type: integer
-  responses:
-    Unauthorized:
-      description: Missing/invalid Authorization header, or invalid credentials.
   schemas:
-    PriceEstimate:
-      type: object
-      properties:
-        services:
-          type: number
-        extras:
-          type: number
-        discount_amount:
-          type: number
-        discount_message:
-          type: string
-        giftcard_amount:
-          type: number
-        price_adjustment:
-          type: number
-        tax:
-          type: object
-          additionalProperties: true
-        tip:
-          type: number
-        total:
-          type: number
-        next_total:
-          type: number
-        duration:
-          type: integer
-        price_for_frequency:
-          type: number
-        price_for_discount_by_code:
-          type: number
-        price_recurring_for_frequency:
-          type: number
     CustomField:
       type: object
       properties:
@@ -307,102 +257,45 @@ components:
           items:
             type: object
             additionalProperties: true
-    PriceEstimateRequest:
-      type: object
-      required:
-      - service_date
-      - frequency_id
-      - services
-      properties:
-        email:
-          type: string
-          format: email
-        booking_uuid:
-          type:
-          - string
-          - 'null'
-        original_booking_id:
-          type:
-          - integer
-          - 'null'
-        service_date:
-          type: string
-        location_id:
-          type:
-          - integer
-          - 'null'
-        frequency_id:
-          type: integer
-        services:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceSelection'
-        discount_code:
-          type:
-          - string
-          - 'null'
-        tip:
-          type:
-          - number
-          - 'null'
-        tip_recurring:
-          type:
-          - boolean
-          - 'null'
-        price_adjustment:
-          type:
-          - number
-          - 'null'
-          description: Staff-only.
-        final_price:
-          type:
-          - number
-          - 'null'
-          description: Staff-only.
-    Extra:
+    Location:
       type: object
       properties:
         id:
           type: integer
         name:
           type: string
-        price:
-          type: number
-        quantity_based:
-          type: boolean
-        recurring:
-          type: boolean
-        discount_by_frequency:
-          type: boolean
-        discount_by_code:
-          type: boolean
-    SpotsRequest:
+    PriceEstimate:
       type: object
-      required:
-      - date
-      - days
-      - mode
       properties:
-        date:
+        services:
+          type: number
+        extras:
+          type: number
+        discount_amount:
+          type: number
+        discount_message:
           type: string
-          format: date
-        days:
+        giftcard_amount:
+          type: number
+        price_adjustment:
+          type: number
+        tax:
+          type: object
+          additionalProperties: true
+        tip:
+          type: number
+        total:
+          type: number
+        next_total:
+          type: number
+        duration:
           type: integer
-          minimum: 1
-          maximum: 7
-        mode:
-          type: string
-          enum:
-          - new
-          - reschedule
-        location_id:
-          type:
-          - integer
-          - 'null'
-        grid:
-          type:
-          - boolean
-          - 'null'
+        price_for_frequency:
+          type: number
+        price_for_discount_by_code:
+          type: number
+        price_recurring_for_frequency:
+          type: number
     PricingParameter:
       type: object
       properties:
@@ -464,6 +357,75 @@ components:
                 type: integer
               quantity:
                 type: integer
+    Extra:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        quantity_based:
+          type: boolean
+        recurring:
+          type: boolean
+        discount_by_frequency:
+          type: boolean
+        discount_by_code:
+          type: boolean
+    PriceEstimateRequest:
+      type: object
+      required:
+      - service_date
+      - frequency_id
+      - services
+      properties:
+        email:
+          type: string
+          format: email
+        booking_uuid:
+          type:
+          - string
+          - 'null'
+        original_booking_id:
+          type:
+          - integer
+          - 'null'
+        service_date:
+          type: string
+        location_id:
+          type:
+          - integer
+          - 'null'
+        frequency_id:
+          type: integer
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceSelection'
+        discount_code:
+          type:
+          - string
+          - 'null'
+        tip:
+          type:
+          - number
+          - 'null'
+        tip_recurring:
+          type:
+          - boolean
+          - 'null'
+        price_adjustment:
+          type:
+          - number
+          - 'null'
+          description: Staff-only.
+        final_price:
+          type:
+          - number
+          - 'null'
+          description: Staff-only.
     Frequency:
       type: object
       properties:
@@ -482,24 +444,32 @@ components:
           type: boolean
         default:
           type: boolean
-    LocationRequest:
+    SpotsRequest:
       type: object
+      required:
+      - date
+      - days
+      - mode
       properties:
-        address:
+        date:
+          type: string
+          format: date
+        days:
+          type: integer
+          minimum: 1
+          maximum: 7
+        mode:
+          type: string
+          enum:
+          - new
+          - reschedule
+        location_id:
           type:
-          - string
+          - integer
           - 'null'
-        city:
+        grid:
           type:
-          - string
-          - 'null'
-        state:
-          type:
-          - string
-          - 'null'
-        zip:
-          type:
-          - string
+          - boolean
           - 'null'
     Service:
       type: object
@@ -529,13 +499,43 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PricingParameter'
-    Location:
+    LocationRequest:
       type: object
       properties:
-        id:
-          type: integer
-        name:
-          type: string
+        address:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        state:
+          type:
+          - string
+          - 'null'
+        zip:
+          type:
+          - string
+          - 'null'
+  parameters:
+    LocationId:
+      name: location_id
+      in: query
+      required: false
+      description: Unique ID of location; default location used if omitted.
+      schema:
+        type: integer
+    BookingUuid:
+      name: booking_uuid
+      in: query
+      required: false
+      description: Booking digest; required (and requires auth) when requesting for an existing booking.
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing/invalid Authorization header, or invalid credentials.
   securitySchemes:
     bearerAuth:
       type: http
