@@ -197,6 +197,17 @@ paths:
           $ref: '#/components/responses/ValidationError'
 components:
   schemas:
+    BookingCreatedResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        ga_transaction:
+          type: object
+          additionalProperties: true
+        ga_item:
+          type: object
+          additionalProperties: true
     CustomerBookingRequest:
       type: object
       required:
@@ -279,15 +290,48 @@ components:
           items:
             type: object
             additionalProperties: true
-    BookingCreatedResponse:
+    Booking:
       type: object
+      description: See https://bitbucket.org/awoo23/api-2.0/wiki/Get_booking_for_customer for full attribute documentation.
+      additionalProperties: true
       properties:
         id:
           type: integer
-        ga_transaction:
+        digest:
+          type: string
+        service_date:
+          type: string
+          format: date-time
+        arrival_window:
+          type: integer
+        address:
           type: object
           additionalProperties: true
-        ga_item:
+        active:
+          type: boolean
+        completed:
+          type: boolean
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        frequency:
+          type: object
+          additionalProperties: true
+        payment_method_info:
+          type: object
+          additionalProperties: true
+        services:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        summary:
+          type: object
+          additionalProperties: true
+        actions:
           type: object
           additionalProperties: true
     ServiceSelection:
@@ -338,50 +382,20 @@ components:
                 type: integer
               quantity:
                 type: integer
-    Booking:
-      type: object
-      description: See https://bitbucket.org/awoo23/api-2.0/wiki/Get_booking_for_customer for full attribute documentation.
-      additionalProperties: true
-      properties:
-        id:
-          type: integer
-        digest:
-          type: string
-        service_date:
-          type: string
-          format: date-time
-        arrival_window:
-          type: integer
-        address:
-          type: object
-          additionalProperties: true
-        active:
-          type: boolean
-        completed:
-          type: boolean
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        frequency:
-          type: object
-          additionalProperties: true
-        payment_method_info:
-          type: object
-          additionalProperties: true
-        services:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        summary:
-          type: object
-          additionalProperties: true
-        actions:
-          type: object
-          additionalProperties: true
+    UpdateCustomerBookingRequest:
+      allOf:
+      - $ref: '#/components/schemas/CustomerBookingRequest'
+      - type: object
+        properties:
+          create_next_recurring:
+            type:
+            - object
+            - 'null'
+            required:
+            - service_date
+            properties:
+              service_date:
+                type: string
     CancelBookingRequest:
       type: object
       properties:
@@ -402,21 +416,9 @@ components:
           type:
           - string
           - 'null'
-    UpdateCustomerBookingRequest:
-      allOf:
-      - $ref: '#/components/schemas/CustomerBookingRequest'
-      - type: object
-        properties:
-          create_next_recurring:
-            type:
-            - object
-            - 'null'
-            required:
-            - service_date
-            properties:
-              service_date:
-                type: string
   responses:
+    Unauthorized:
+      description: Missing/invalid Authorization header, or invalid credentials.
     ValidationError:
       description: JSON schema or data validation error.
       content:
@@ -424,8 +426,6 @@ components:
           schema:
             type: object
             additionalProperties: true
-    Unauthorized:
-      description: Missing/invalid Authorization header, or invalid credentials.
   securitySchemes:
     bearerAuth:
       type: http

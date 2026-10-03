@@ -86,8 +86,6 @@ components:
           type: string
           description: 6-digit 2FA token, if enabled.
   responses:
-    Unauthorized:
-      description: Missing/invalid Authorization header, or invalid credentials.
     ValidationError:
       description: JSON schema or data validation error.
       content:
@@ -95,6 +93,8 @@ components:
           schema:
             type: object
             additionalProperties: true
+    Unauthorized:
+      description: Missing/invalid Authorization header, or invalid credentials.
   securitySchemes:
     bearerAuth:
       type: http

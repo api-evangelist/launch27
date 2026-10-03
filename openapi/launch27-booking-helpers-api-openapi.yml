@@ -223,157 +223,6 @@ paths:
           description: Customer has no access to booking.
 components:
   schemas:
-    CustomField:
-      type: object
-      properties:
-        id:
-          type: integer
-        code:
-          type: string
-        label:
-          type: string
-        control_type:
-          type: string
-          enum:
-          - single_line
-          - multi_line
-          - radio_buttons
-          - checkboxes
-          - drop_down
-          - plain_text
-          - date
-          - datetime
-          - checkbox
-        value_required:
-          type: boolean
-        visible:
-          type: boolean
-        ordering:
-          type: integer
-        default_value:
-          type: string
-        options:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-    Location:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-    PriceEstimate:
-      type: object
-      properties:
-        services:
-          type: number
-        extras:
-          type: number
-        discount_amount:
-          type: number
-        discount_message:
-          type: string
-        giftcard_amount:
-          type: number
-        price_adjustment:
-          type: number
-        tax:
-          type: object
-          additionalProperties: true
-        tip:
-          type: number
-        total:
-          type: number
-        next_total:
-          type: number
-        duration:
-          type: integer
-        price_for_frequency:
-          type: number
-        price_for_discount_by_code:
-          type: number
-        price_recurring_for_frequency:
-          type: number
-    PricingParameter:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        price:
-          type: number
-        quantity_minimum:
-          type: integer
-        quantity_maximum:
-          type: integer
-    ServiceSelection:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: integer
-        hourly:
-          type:
-          - object
-          - 'null'
-          properties:
-            quantity:
-              type: integer
-            minutes:
-              type: integer
-        extras:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            required:
-            - id
-            - quantity
-            properties:
-              id:
-                type: integer
-              quantity:
-                type: integer
-              recurring:
-                type:
-                - boolean
-                - 'null'
-        pricing_parameters:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            required:
-            - id
-            - quantity
-            properties:
-              id:
-                type: integer
-              quantity:
-                type: integer
-    Extra:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        price:
-          type: number
-        quantity_based:
-          type: boolean
-        recurring:
-          type: boolean
-        discount_by_frequency:
-          type: boolean
-        discount_by_code:
-          type: boolean
     PriceEstimateRequest:
       type: object
       required:
@@ -426,24 +275,6 @@ components:
           - number
           - 'null'
           description: Staff-only.
-    Frequency:
-      type: object
-      properties:
-        id:
-          type: integer
-        interval:
-          type: string
-          description: '''o'' = one time; otherwise a recurring interval pattern like 1w, 2m15d.'
-        name:
-          type: string
-        percent:
-          type: number
-        amount:
-          type: number
-        exclude_first:
-          type: boolean
-        default:
-          type: boolean
     SpotsRequest:
       type: object
       required:
@@ -499,6 +330,61 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PricingParameter'
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    ServiceSelection:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: integer
+        hourly:
+          type:
+          - object
+          - 'null'
+          properties:
+            quantity:
+              type: integer
+            minutes:
+              type: integer
+        extras:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            required:
+            - id
+            - quantity
+            properties:
+              id:
+                type: integer
+              quantity:
+                type: integer
+              recurring:
+                type:
+                - boolean
+                - 'null'
+        pricing_parameters:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            required:
+            - id
+            - quantity
+            properties:
+              id:
+                type: integer
+              quantity:
+                type: integer
     LocationRequest:
       type: object
       properties:
@@ -518,14 +404,124 @@ components:
           type:
           - string
           - 'null'
+    Extra:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        quantity_based:
+          type: boolean
+        recurring:
+          type: boolean
+        discount_by_frequency:
+          type: boolean
+        discount_by_code:
+          type: boolean
+    CustomField:
+      type: object
+      properties:
+        id:
+          type: integer
+        code:
+          type: string
+        label:
+          type: string
+        control_type:
+          type: string
+          enum:
+          - single_line
+          - multi_line
+          - radio_buttons
+          - checkboxes
+          - drop_down
+          - plain_text
+          - date
+          - datetime
+          - checkbox
+        value_required:
+          type: boolean
+        visible:
+          type: boolean
+        ordering:
+          type: integer
+        default_value:
+          type: string
+        options:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    PriceEstimate:
+      type: object
+      properties:
+        services:
+          type: number
+        extras:
+          type: number
+        discount_amount:
+          type: number
+        discount_message:
+          type: string
+        giftcard_amount:
+          type: number
+        price_adjustment:
+          type: number
+        tax:
+          type: object
+          additionalProperties: true
+        tip:
+          type: number
+        total:
+          type: number
+        next_total:
+          type: number
+        duration:
+          type: integer
+        price_for_frequency:
+          type: number
+        price_for_discount_by_code:
+          type: number
+        price_recurring_for_frequency:
+          type: number
+    Frequency:
+      type: object
+      properties:
+        id:
+          type: integer
+        interval:
+          type: string
+          description: '''o'' = one time; otherwise a recurring interval pattern like 1w, 2m15d.'
+        name:
+          type: string
+        percent:
+          type: number
+        amount:
+          type: number
+        exclude_first:
+          type: boolean
+        default:
+          type: boolean
+    PricingParameter:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        quantity_minimum:
+          type: integer
+        quantity_maximum:
+          type: integer
+  responses:
+    Unauthorized:
+      description: Missing/invalid Authorization header, or invalid credentials.
   parameters:
-    LocationId:
-      name: location_id
-      in: query
-      required: false
-      description: Unique ID of location; default location used if omitted.
-      schema:
-        type: integer
     BookingUuid:
       name: booking_uuid
       in: query
@@ -533,9 +529,13 @@ components:
       description: Booking digest; required (and requires auth) when requesting for an existing booking.
       schema:
         type: string
-  responses:
-    Unauthorized:
-      description: Missing/invalid Authorization header, or invalid credentials.
+    LocationId:
+      name: location_id
+      in: query
+      required: false
+      description: Unique ID of location; default location used if omitted.
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http
