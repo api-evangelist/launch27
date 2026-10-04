@@ -48,7 +48,26 @@ paths:
         '422':
           $ref: '#/components/responses/ValidationError'
 components:
+  responses:
+    ValidationError:
+      description: JSON schema or data validation error.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
   schemas:
+    BookingCreatedResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        ga_transaction:
+          type: object
+          additionalProperties: true
+        ga_item:
+          type: object
+          additionalProperties: true
     GuestBookingRequest:
       type: object
       required:
@@ -200,25 +219,6 @@ components:
                 type: integer
               quantity:
                 type: integer
-    BookingCreatedResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-        ga_transaction:
-          type: object
-          additionalProperties: true
-        ga_item:
-          type: object
-          additionalProperties: true
-  responses:
-    ValidationError:
-      description: JSON schema or data validation error.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http

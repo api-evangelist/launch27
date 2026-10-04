@@ -222,7 +222,17 @@ paths:
         '403':
           description: Customer has no access to booking.
 components:
+  responses:
+    Unauthorized:
+      description: Missing/invalid Authorization header, or invalid credentials.
   schemas:
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
     PriceEstimateRequest:
       type: object
       required:
@@ -275,6 +285,56 @@ components:
           - number
           - 'null'
           description: Staff-only.
+    PriceEstimate:
+      type: object
+      properties:
+        services:
+          type: number
+        extras:
+          type: number
+        discount_amount:
+          type: number
+        discount_message:
+          type: string
+        giftcard_amount:
+          type: number
+        price_adjustment:
+          type: number
+        tax:
+          type: object
+          additionalProperties: true
+        tip:
+          type: number
+        total:
+          type: number
+        next_total:
+          type: number
+        duration:
+          type: integer
+        price_for_frequency:
+          type: number
+        price_for_discount_by_code:
+          type: number
+        price_recurring_for_frequency:
+          type: number
+    Frequency:
+      type: object
+      properties:
+        id:
+          type: integer
+        interval:
+          type: string
+          description: '''o'' = one time; otherwise a recurring interval pattern like 1w, 2m15d.'
+        name:
+          type: string
+        percent:
+          type: number
+        amount:
+          type: number
+        exclude_first:
+          type: boolean
+        default:
+          type: boolean
     SpotsRequest:
       type: object
       required:
@@ -302,41 +362,25 @@ components:
           type:
           - boolean
           - 'null'
-    Service:
+    LocationRequest:
       type: object
       properties:
-        id:
-          type: integer
-        name:
-          type: string
-        price:
-          type: number
-        commercial:
-          type: boolean
-        discount_by_frequency:
-          type: boolean
-        discount_by_code:
-          type: boolean
-        hourly:
+        address:
           type:
-          - object
+          - string
           - 'null'
-          additionalProperties: true
-        extras:
-          type: array
-          items:
-            $ref: '#/components/schemas/Extra'
-        pricing_parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/PricingParameter'
-    Location:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
+        city:
+          type:
+          - string
+          - 'null'
+        state:
+          type:
+          - string
+          - 'null'
+        zip:
+          type:
+          - string
+          - 'null'
     ServiceSelection:
       type: object
       required:
@@ -385,25 +429,19 @@ components:
                 type: integer
               quantity:
                 type: integer
-    LocationRequest:
+    PricingParameter:
       type: object
       properties:
-        address:
-          type:
-          - string
-          - 'null'
-        city:
-          type:
-          - string
-          - 'null'
-        state:
-          type:
-          - string
-          - 'null'
-        zip:
-          type:
-          - string
-          - 'null'
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        quantity_minimum:
+          type: integer
+        quantity_maximum:
+          type: integer
     Extra:
       type: object
       properties:
@@ -455,57 +493,7 @@ components:
           items:
             type: object
             additionalProperties: true
-    PriceEstimate:
-      type: object
-      properties:
-        services:
-          type: number
-        extras:
-          type: number
-        discount_amount:
-          type: number
-        discount_message:
-          type: string
-        giftcard_amount:
-          type: number
-        price_adjustment:
-          type: number
-        tax:
-          type: object
-          additionalProperties: true
-        tip:
-          type: number
-        total:
-          type: number
-        next_total:
-          type: number
-        duration:
-          type: integer
-        price_for_frequency:
-          type: number
-        price_for_discount_by_code:
-          type: number
-        price_recurring_for_frequency:
-          type: number
-    Frequency:
-      type: object
-      properties:
-        id:
-          type: integer
-        interval:
-          type: string
-          description: '''o'' = one time; otherwise a recurring interval pattern like 1w, 2m15d.'
-        name:
-          type: string
-        percent:
-          type: number
-        amount:
-          type: number
-        exclude_first:
-          type: boolean
-        default:
-          type: boolean
-    PricingParameter:
+    Service:
       type: object
       properties:
         id:
@@ -514,13 +502,25 @@ components:
           type: string
         price:
           type: number
-        quantity_minimum:
-          type: integer
-        quantity_maximum:
-          type: integer
-  responses:
-    Unauthorized:
-      description: Missing/invalid Authorization header, or invalid credentials.
+        commercial:
+          type: boolean
+        discount_by_frequency:
+          type: boolean
+        discount_by_code:
+          type: boolean
+        hourly:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        extras:
+          type: array
+          items:
+            $ref: '#/components/schemas/Extra'
+        pricing_parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/PricingParameter'
   parameters:
     BookingUuid:
       name: booking_uuid
