@@ -4,13 +4,12 @@
     {
       "source": "https://launch27.com/feed/",
       "feed_url": "https://launch27.com/feed/",
-      "title": "Launch27",
+      "title": "",
       "saved": 0,
-      "nature": "undetermined",
-      "nature_basis": null
+      "method": "feed"
     }
   ],
-  "fetched": "2026-10-03T12:15:37Z",
+  "fetched": "2026-10-10T13:15:00Z",
   "post_count": 10,
   "feed_nature": "undetermined",
   "feed_nature_basis": null,
