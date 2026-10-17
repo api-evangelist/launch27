@@ -196,61 +196,7 @@ paths:
         '422':
           $ref: '#/components/responses/ValidationError'
 components:
-  responses:
-    ValidationError:
-      description: JSON schema or data validation error.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
-    Unauthorized:
-      description: Missing/invalid Authorization header, or invalid credentials.
   schemas:
-    Booking:
-      type: object
-      description: See https://bitbucket.org/awoo23/api-2.0/wiki/Get_booking_for_customer for full attribute documentation.
-      additionalProperties: true
-      properties:
-        id:
-          type: integer
-        digest:
-          type: string
-        service_date:
-          type: string
-          format: date-time
-        arrival_window:
-          type: integer
-        address:
-          type: object
-          additionalProperties: true
-        active:
-          type: boolean
-        completed:
-          type: boolean
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        frequency:
-          type: object
-          additionalProperties: true
-        payment_method_info:
-          type: object
-          additionalProperties: true
-        services:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        summary:
-          type: object
-          additionalProperties: true
-        actions:
-          type: object
-          additionalProperties: true
     UpdateCustomerBookingRequest:
       allOf:
       - $ref: '#/components/schemas/CustomerBookingRequest'
@@ -265,26 +211,6 @@ components:
             properties:
               service_date:
                 type: string
-    CancelBookingRequest:
-      type: object
-      properties:
-        confirmed_late:
-          type: boolean
-        confirmed_fee:
-          type:
-          - number
-          - 'null'
-        confirmed_recurring:
-          type:
-          - object
-          - 'null'
-          properties:
-            cancel_future:
-              type: boolean
-        reason:
-          type:
-          - string
-          - 'null'
     BookingCreatedResponse:
       type: object
       properties:
@@ -296,6 +222,54 @@ components:
         ga_item:
           type: object
           additionalProperties: true
+    ServiceSelection:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: integer
+        hourly:
+          type:
+          - object
+          - 'null'
+          properties:
+            quantity:
+              type: integer
+            minutes:
+              type: integer
+        extras:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            required:
+            - id
+            - quantity
+            properties:
+              id:
+                type: integer
+              quantity:
+                type: integer
+              recurring:
+                type:
+                - boolean
+                - 'null'
+        pricing_parameters:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            required:
+            - id
+            - quantity
+            properties:
+              id:
+                type: integer
+              quantity:
+                type: integer
     CustomerBookingRequest:
       type: object
       required:
@@ -378,54 +352,80 @@ components:
           items:
             type: object
             additionalProperties: true
-    ServiceSelection:
+    CancelBookingRequest:
       type: object
-      required:
-      - id
       properties:
-        id:
-          type: integer
-        hourly:
+        confirmed_late:
+          type: boolean
+        confirmed_fee:
+          type:
+          - number
+          - 'null'
+        confirmed_recurring:
           type:
           - object
           - 'null'
           properties:
-            quantity:
-              type: integer
-            minutes:
-              type: integer
-        extras:
+            cancel_future:
+              type: boolean
+        reason:
           type:
-          - array
+          - string
           - 'null'
+    Booking:
+      type: object
+      description: See https://bitbucket.org/awoo23/api-2.0/wiki/Get_booking_for_customer for full attribute documentation.
+      additionalProperties: true
+      properties:
+        id:
+          type: integer
+        digest:
+          type: string
+        service_date:
+          type: string
+          format: date-time
+        arrival_window:
+          type: integer
+        address:
+          type: object
+          additionalProperties: true
+        active:
+          type: boolean
+        completed:
+          type: boolean
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        frequency:
+          type: object
+          additionalProperties: true
+        payment_method_info:
+          type: object
+          additionalProperties: true
+        services:
+          type: array
           items:
             type: object
-            required:
-            - id
-            - quantity
-            properties:
-              id:
-                type: integer
-              quantity:
-                type: integer
-              recurring:
-                type:
-                - boolean
-                - 'null'
-        pricing_parameters:
-          type:
-          - array
-          - 'null'
-          items:
+            additionalProperties: true
+        summary:
+          type: object
+          additionalProperties: true
+        actions:
+          type: object
+          additionalProperties: true
+  responses:
+    ValidationError:
+      description: JSON schema or data validation error.
+      content:
+        application/json:
+          schema:
             type: object
-            required:
-            - id
-            - quantity
-            properties:
-              id:
-                type: integer
-              quantity:
-                type: integer
+            additionalProperties: true
+    Unauthorized:
+      description: Missing/invalid Authorization header, or invalid credentials.
   securitySchemes:
     bearerAuth:
       type: http

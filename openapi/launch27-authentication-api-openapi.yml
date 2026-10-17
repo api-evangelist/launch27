@@ -64,6 +64,20 @@ components:
     Unauthorized:
       description: Missing/invalid Authorization header, or invalid credentials.
   schemas:
+    LoginRequest:
+      type: object
+      required:
+      - email
+      - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        token:
+          type: string
+          description: 6-digit 2FA token, if enabled.
     LoginResponse:
       type: object
       properties:
@@ -81,20 +95,6 @@ components:
         bearer:
           type: string
           description: JWT bearer token.
-    LoginRequest:
-      type: object
-      required:
-      - email
-      - password
-      properties:
-        email:
-          type: string
-          format: email
-        password:
-          type: string
-        token:
-          type: string
-          description: 6-digit 2FA token, if enabled.
   securitySchemes:
     bearerAuth:
       type: http
