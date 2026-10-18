@@ -46,6 +46,15 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/launch27.png
 tags:
+- Field Service
+- Home Services
+- Cleaning Services
+- Booking
+- Scheduling
+- Fullsteam
+- Vonigo
+- Real-Time
+tags_raw:
 - Field Service Management
 - Home Services
 - Cleaning Services
